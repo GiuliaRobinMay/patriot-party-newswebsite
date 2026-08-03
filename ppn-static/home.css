@@ -1,0 +1,260 @@
+/* ============================================================
+   home.css — homepage-only styles, loaded AFTER style.css on
+   index.html. Hero restructure, stream block, Coffee with Chas,
+   join banner, moved partners.
+   ============================================================ */
+
+/* --- Hero: text left, brand monitor panel right (compact so stream peeks in) --- */
+.hero--home { min-height: auto; padding: 84px 32px 36px; }
+.hero--home .hero-inner { grid-template-columns: 1.25fr 1fr; gap: 56px; align-items: center; }
+
+/* Tighten the hero vertically — roughly half the previous height */
+.hero--home .hero-eyebrow { margin-bottom: 18px; }
+.hero--home .hero-headline { font-size: clamp(38px, 4.6vw, 64px); line-height: 0.96; margin-bottom: 16px; }
+.hero--home .hero-tagline { font-size: clamp(22px, 2.6vw, 34px); margin-top: 10px; }
+.hero--home .hero-sub { margin-bottom: 24px; }
+.hero--home .hero-ctas { margin-bottom: 28px; }
+
+/* Right-side brand "transmission monitor" panel */
+.hero-monitor {
+  position: relative;
+  padding: 40px 36px;
+  background:
+    radial-gradient(ellipse at 70% 20%, rgba(201, 166, 96, 0.10) 0%, transparent 60%),
+    linear-gradient(180deg, #141416 0%, #0C0C0E 100%);
+  border: 1px solid rgba(201, 166, 96, 0.28);
+  overflow: hidden;
+}
+.hero-monitor::before {
+  content: "PPN";
+  position: absolute;
+  right: -8px;
+  bottom: -28px;
+  font-family: 'Anton', sans-serif;
+  font-size: 180px;
+  line-height: 1;
+  color: rgba(245, 240, 230, 0.04);
+  pointer-events: none;
+}
+.hero-monitor-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--flag-red);
+  margin-bottom: 26px;
+}
+.hero-monitor-label .live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--flag-red);
+  box-shadow: 0 0 0 0 rgba(200,16,46,0.6);
+  animation: heroPulse 1.8s infinite;
+}
+@keyframes heroPulse {
+  0% { box-shadow: 0 0 0 0 rgba(200,16,46,0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(200,16,46,0); }
+  100% { box-shadow: 0 0 0 0 rgba(200,16,46,0); }
+}
+.hero-monitor-quote {
+  position: relative;
+  z-index: 2;
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(20px, 2.3vw, 27px);
+  line-height: 1.32;
+  color: var(--bone);
+  margin: 0 0 28px;
+}
+.hero-monitor-quote em { color: var(--brass); font-style: italic; }
+.hero-monitor-cue {
+  position: relative;
+  z-index: 2;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(201, 166, 96, 0.22);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--flag-red-bright);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-monitor-cue:hover { color: #fff; }
+
+/* --- Red "Join the Community" banner (between Partners and Manifesto) --- */
+.join-banner {
+  background:
+    linear-gradient(180deg, var(--flag-red) 0%, #a50e26 100%);
+  padding: 44px 32px;
+  text-align: center;
+}
+.join-banner-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px 32px;
+}
+.join-banner-text { text-align: left; }
+.join-banner-head {
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(24px, 3.4vw, 40px);
+  line-height: 1;
+  color: #fff;
+  margin: 0 0 6px;
+}
+.join-banner-sub {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  color: rgba(255,255,255,0.9);
+  margin: 0;
+}
+.join-banner .btn {
+  background: #0C0C0E;
+  color: var(--bone);
+  border-color: #0C0C0E;
+  white-space: nowrap;
+}
+.join-banner .btn:hover { background: #000; }
+
+@media (max-width: 900px) {
+  .hero--home .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .join-banner-inner { flex-direction: column; }
+  .join-banner-text { text-align: center; }
+}
+
+/* Hero tagline now sits below the 3-line headline */
+.hero-tagline {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--brass);
+  font-size: clamp(26px, 3.4vw, 46px);
+  line-height: 1.1;
+  margin: 14px 0 0;
+}
+
+/* --- Stream sits directly under the hero text --- */
+.home-stream-section { padding: 8px 32px 64px; background: var(--ink); }
+.home-stream-section .home-stream-label {
+  display: block;
+  max-width: 1200px;
+  margin: 0 auto 20px;
+}
+
+/* --- Coffee with Chas conversion block --- */
+.coffee-cta {
+  position: relative;
+  padding: 80px 32px;
+  background:
+    radial-gradient(ellipse at 75% 20%, rgba(201, 166, 96, 0.12) 0%, transparent 55%),
+    linear-gradient(180deg, #141416 0%, #0C0C0E 100%);
+  border-top: 1px solid rgba(201, 166, 96, 0.18);
+  border-bottom: 1px solid rgba(201, 166, 96, 0.18);
+  overflow: hidden;
+}
+.coffee-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+}
+.coffee-banner {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--brass);
+  padding: 9px 16px;
+  border: 1px solid rgba(201, 166, 96, 0.45);
+  background: rgba(201, 166, 96, 0.06);
+  margin-bottom: 28px;
+}
+.coffee-headline {
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(28px, 4.4vw, 52px);
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+  color: var(--bone);
+  margin: 0 0 22px;
+}
+.coffee-headline .red { color: var(--flag-red); }
+.coffee-sub {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(16px, 1.9vw, 20px);
+  line-height: 1.5;
+  color: rgba(245, 240, 230, 0.78);
+  max-width: 680px;
+  margin: 0 auto 36px;
+}
+
+/* Countdown to next 7am */
+.coffee-countdown {
+  display: inline-flex;
+  gap: 28px;
+  padding: 22px 34px;
+  margin-bottom: 36px;
+  border: 1px solid rgba(201, 166, 96, 0.3);
+  background: rgba(12, 12, 14, 0.55);
+}
+.coffee-unit { text-align: center; }
+.coffee-unit b {
+  display: block;
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+  font-size: clamp(34px, 5vw, 54px);
+  line-height: 1;
+  color: var(--bone);
+}
+.coffee-unit span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 230, 0.55);
+}
+.coffee-ctas { margin-top: 4px; }
+.coffee-fineprint {
+  margin-top: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(245, 240, 230, 0.55);
+}
+.coffee-fineprint strong { color: var(--brass); }
+
+/* --- Partners "View all" button (readable on parchment) --- */
+.partners-viewall {
+  text-align: center;
+  margin-top: 40px;
+}
+.partners-viewall .btn {
+  background: var(--ink);
+  color: var(--bone);
+  border-color: var(--ink);
+}
+.partners-viewall .btn:hover {
+  background: var(--flag-red);
+  border-color: var(--flag-red);
+  color: #fff;
+}
+
+@media (max-width: 640px) {
+  .coffee-countdown { gap: 16px; padding: 18px 18px; }
+}

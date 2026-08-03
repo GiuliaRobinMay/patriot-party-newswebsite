@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watch (Twitch) — PREVIEW · Patriot Party News</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="./assets/img/favicon.ico" sizes="any">
+<meta name="theme-color" content="#0C0C0E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./watch-embed.css">
+</head>
+<body>
+
+<div class="we-demo-flag">DEMO · TWITCH OPTION · not linked, not deployed — compare with the Kick version</div>
+
+<main class="we-wrap">
+  <div class="we-head">
+    <div class="we-eyebrow"><span class="dot"></span> Live // Today's Broadcast</div>
+    <h1 class="we-title">Watch us live.</h1>
+    <p class="we-note">
+      Twitch channel: <strong>thepatriotpartynewsppn2</strong>.
+      NOTE: Twitch embeds only render on the real domain (the <code>parent</code> below is set to
+      thepatriotpartynews.com) — they will NOT load from a local file. Test after deploying, or via a localhost server.
+    </p>
+  </div>
+
+  <!-- PLAYER + CHAT -->
+  <div class="we-grid">
+    <div class="we-player">
+      <!-- Live player. Auto-shows the live stream, or "offline" when not live. -->
+      <iframe
+        src="https://player.twitch.tv/?channel=thepatriotpartynewsppn2&parent=thepatriotpartynews.com&parent=localhost"
+        allowfullscreen
+        title="PPN Live on Twitch">
+      </iframe>
+    </div>
+    <div class="we-chat">
+      <!-- Live chat (separate iframe). Same parent rule applies. -->
+      <iframe
+        src="https://www.twitch.tv/embed/thepatriotpartynewsppn2/chat?parent=thepatriotpartynews.com&parent=localhost&darkpopout"
+        title="PPN Twitch Chat">
+      </iframe>
+    </div>
+  </div>
+
+  <!-- PREVIOUS BROADCASTS -->
+  <div class="we-vods">
+    <div class="we-vods-head">
+      <h3>Previous Broadcasts</h3>
+      <a href="https://www.twitch.tv/thepatriotpartynewsppn2/videos" target="_blank" rel="noopener">View all on Twitch →</a>
+    </div>
+
+    <!--
+      IMPORTANT: Twitch has NO native "list of past broadcasts" widget, AND it
+      auto-deletes VODs after ~14 days (60 for affiliates/partners) unless saved
+      as Highlights. The cards below are PLACEHOLDERS showing the layout.
+      To populate automatically, a Cloudflare Worker would call the Twitch Helix API
+      (GET https://api.twitch.tv/helix/videos?user_id=<id>&type=archive) with an
+      app token, and render the results into this grid. Each card's link becomes
+      ./watch?video=<id> or opens the VOD via player.twitch.tv/?video=v<id>&parent=...
+    -->
+    <div class="we-vod-grid" id="vodGrid">
+      <a class="we-vod" href="https://www.twitch.tv/thepatriotpartynewsppn2/videos" target="_blank" rel="noopener">
+        <div class="we-vod-thumb" style="background-image:url('./assets/img/ppn-og.png')"><span class="we-vod-dur">2:00:00</span></div>
+        <div class="we-vod-meta"><p class="we-vod-title">The Patriot Party News — Daily Dispatch</p><span class="we-vod-date">Example VOD · replace via API</span></div>
+      </a>
+      <a class="we-vod" href="https://www.twitch.tv/thepatriotpartynewsppn2/videos" target="_blank" rel="noopener">
+        <div class="we-vod-thumb" style="background-image:url('./assets/img/ppn-og.png')"><span class="we-vod-dur">1:58:12</span></div>
+        <div class="we-vod-meta"><p class="we-vod-title">The Patriot Party News — Midday</p><span class="we-vod-date">Example VOD · replace via API</span></div>
+      </a>
+      <a class="we-vod" href="https://www.twitch.tv/thepatriotpartynewsppn2/videos" target="_blank" rel="noopener">
+        <div class="we-vod-thumb" style="background-image:url('./assets/img/ppn-og.png')"><span class="we-vod-dur">2:11:40</span></div>
+        <div class="we-vod-meta"><p class="we-vod-title">The Patriot Party News — Evening</p><span class="we-vod-date">Example VOD · replace via API</span></div>
+      </a>
+      <a class="we-vod" href="https://www.twitch.tv/thepatriotpartynewsppn2/videos" target="_blank" rel="noopener">
+        <div class="we-vod-thumb" style="background-image:url('./assets/img/ppn-og.png')"><span class="we-vod-dur">1:47:05</span></div>
+        <div class="we-vod-meta"><p class="we-vod-title">The Patriot Party News — Special</p><span class="we-vod-date">Example VOD · replace via API</span></div>
+      </a>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

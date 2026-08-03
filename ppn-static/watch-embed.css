@@ -1,0 +1,97 @@
+/* ============================================================
+   watch-embed.css — PREVIEW layout for the Twitch/Kick watch
+   module (player + chat + previous broadcasts). Loaded only on
+   the watch-*-preview.html demo pages. Does not affect the site.
+   ============================================================ */
+
+.we-wrap { max-width: 1320px; margin: 0 auto; padding: 110px 24px 72px; }
+
+.we-head { margin-bottom: 28px; }
+.we-eyebrow {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--flag-red);
+  margin-bottom: 14px;
+}
+.we-eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--flag-red); }
+.we-title {
+  font-family: 'Anton', sans-serif; text-transform: uppercase;
+  font-size: clamp(30px, 4vw, 52px); line-height: 0.98; color: var(--bone); margin: 0;
+}
+.we-note {
+  margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  color: var(--bone-dim); letter-spacing: 0.04em;
+}
+
+/* Player + chat row */
+.we-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  align-items: stretch;
+}
+.we-player {
+  position: relative; aspect-ratio: 16 / 9; background: #000;
+  border: 1px solid rgba(201, 166, 96, 0.25);
+}
+.we-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.we-chat {
+  display: flex; min-height: 480px; background: #0c0c0e;
+  border: 1px solid rgba(201, 166, 96, 0.25);
+}
+.we-chat iframe { width: 100%; height: 100%; min-height: 480px; border: 0; }
+
+/* Previous broadcasts */
+.we-vods { margin-top: 44px; }
+.we-vods-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 18px;
+}
+.we-vods-head h3 {
+  font-family: 'Anton', sans-serif; text-transform: uppercase; letter-spacing: 0.04em;
+  font-size: 24px; color: var(--bone); margin: 0;
+}
+.we-vods-head a {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--brass); text-decoration: none;
+}
+.we-vods-head a:hover { color: var(--bone); }
+
+.we-vod-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px;
+}
+.we-vod {
+  display: block; text-decoration: none; background: var(--graphite);
+  border: 1px solid rgba(201, 166, 96, 0.2); transition: border-color 0.2s, transform 0.2s;
+}
+.we-vod:hover { border-color: var(--brass); transform: translateY(-3px); }
+.we-vod-thumb {
+  position: relative; aspect-ratio: 16 / 9;
+  background: #000 center / cover no-repeat;
+  display: grid; place-items: center;
+}
+.we-vod-thumb .play { width: 46px; height: 46px; opacity: 0.85; }
+.we-vod-dur {
+  position: absolute; bottom: 7px; right: 7px; background: rgba(0, 0, 0, 0.82);
+  color: #fff; font: 700 11px 'JetBrains Mono', monospace; padding: 2px 6px;
+}
+.we-vod-meta { padding: 12px 14px 14px; }
+.we-vod-title {
+  font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px;
+  color: var(--bone); margin: 0 0 5px; line-height: 1.35;
+}
+.we-vod-date {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: var(--bone-dim);
+}
+
+/* Demo ribbon */
+.we-demo-flag {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: var(--brass); color: #0c0c0e; text-align: center;
+  font: 700 12px 'JetBrains Mono', monospace; letter-spacing: 0.1em; padding: 7px;
+}
+
+@media (max-width: 900px) {
+  .we-grid { grid-template-columns: 1fr; }
+  .we-chat { min-height: 460px; }
+}
