@@ -47,7 +47,6 @@
     <ul class="nav-links">
       <li><a href="./index.html">Home</a></li>
       <li><a href="./partners.html">Our Partners</a></li>
-      <li><a href="./shop.html">Shop</a></li>
       <li><a href="./donate.html">Donate</a></li>
       <li><a href="#team">Meet The Team</a></li>
       <li><a href="./contact.html">Contact Us</a></li>
@@ -93,11 +92,23 @@
       </div>
     </div>
 
-    <aside class="hero-monitor">
-      <div class="hero-monitor-label"><span class="live-dot"></span> Members Only · A Private Patriot Network</div>
-      <p class="hero-monitor-quote">
-        The broadcast is free. The <em>Underground</em> is the private community behind it — where patriots actually meet. 50 state rooms, live voice chat any hour, and Coffee with Chas every morning at 9. It's not a feed you watch. It's a room you're in.
+    <aside class="hero-monitor hero-monitor--drive" id="driveMonitor">
+      <div class="hero-monitor-label"><span class="live-dot"></span> New Room · Opening Today</div>
+      <h2 class="drive-title">Patriot <span class="red">Drive&nbsp;Time</span></h2>
+      <p class="drive-with">with Chas · Live Voice · Discord</p>
+      <p class="drive-pitch">
+        Not a show you watch — a room you're in. Ride home with the patriots and talk with <em>Chas himself</em>, live, every weekday drive.
       </p>
+      <div class="drive-countdown" id="driveCountdown" role="timer" aria-label="Countdown to Patriot Drive Time launch">
+        <div class="drive-unit" id="dcDaysWrap"><b id="dc-d">00</b><span>Days</span></div>
+        <div class="drive-unit"><b id="dc-h">00</b><span>Hours</span></div>
+        <div class="drive-unit"><b id="dc-m">00</b><span>Min</span></div>
+        <div class="drive-unit"><b id="dc-s">00</b><span>Sec</span></div>
+      </div>
+      <div class="drive-doors" id="driveDoors">◉ Doors open Monday · 3:00 PM ET</div>
+      <div class="drive-live" id="driveLive"><span class="live-dot"></span> The room is open — Chas is live</div>
+      <a href="https://join.patriotchute.com/" target="_blank" rel="noopener" class="btn btn-primary drive-cta" id="driveCta">Get Personal Access to Chas <span class="arrow">→</span></a>
+      <p class="drive-fine">Members walk straight in · 30 days free · cancel anytime</p>
       <a href="#liveStream" class="hero-monitor-cue">▶ Watch today's broadcast live below ↓</a>
     </aside>
   </div>
@@ -443,8 +454,7 @@
       <ul>
         <li><a href="./index.html">Home</a></li>
         <li><a href="./partners.html">Our Partners</a></li>
-        <li><a href="./shop.html">Shop</a></li>
-        <li><a href="./donate.html">Donate</a></li>
+          <li><a href="./donate.html">Donate</a></li>
         <li><a href="#team">Meet The Team</a></li>
         <li><a href="./contact.html">Contact Us</a></li>
       </ul>
@@ -475,6 +485,40 @@
     <span>◉ Transmission Signal 100%</span>
   </div>
 </footer>
+
+<!-- Countdown to Patriot Drive Time doors opening -->
+<script>
+(function(){
+  /* ── LAUNCH CONFIG — change this ONE line ──────────────────────
+     3:00 PM ET (Aug = EDT)  → '2026-08-03T15:00:00-04:00'
+     3:00 PM MST             → '2026-08-03T15:00:00-07:00'
+     Next Monday, 3 PM ET    → '2026-08-10T15:00:00-04:00'      */
+  var DRIVE_LAUNCH = new Date('2026-08-03T15:00:00-04:00');
+
+  var monitor = document.getElementById('driveMonitor');
+  if (!monitor) return;
+  var pad = function(n){ return (n<10?'0':'')+n; };
+  function tick(){
+    var diff = DRIVE_LAUNCH - Date.now();
+    if (diff <= 0) {
+      monitor.classList.add('is-live');
+      var cta = document.getElementById('driveCta');
+      if (cta) cta.innerHTML = 'Walk In Now — Chas Is Live <span class="arrow">→</span>';
+      return;
+    }
+    var s = Math.floor(diff/1000);
+    var d = Math.floor(s/86400);
+    var daysWrap = document.getElementById('dcDaysWrap');
+    if (daysWrap) daysWrap.style.display = d > 0 ? '' : 'none';
+    document.getElementById('dc-d').textContent = pad(d);
+    document.getElementById('dc-h').textContent = pad(Math.floor(s%86400/3600));
+    document.getElementById('dc-m').textContent = pad(Math.floor(s%3600/60));
+    document.getElementById('dc-s').textContent = pad(s%60);
+    setTimeout(tick, 250);
+  }
+  tick();
+})();
+</script>
 
 <!-- Countdown to next 9am Central (Coffee with Chas) -->
 <script>
