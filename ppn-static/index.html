@@ -46,10 +46,10 @@
     </div>
     <ul class="nav-links">
       <li><a href="./index.html">Home</a></li>
-      <li><a href="./partners.html">Our Partners</a></li>
+      <li><a href="./partners.html">Partners</a></li>
       <li><a href="./donate.html">Donate</a></li>
-      <li><a href="#team">Meet The Team</a></li>
-      <li><a href="./contact.html">Contact Us</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="./contact.html">Contact</a></li>
     </ul>
     <a href="https://join.patriotchute.com/" target="_blank" rel="noopener" class="nav-cta">Start Free Trial →</a>
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -92,20 +92,12 @@
       </div>
     </div>
 
-    <aside class="hero-monitor hero-monitor--drive" id="driveMonitor">
-      <div class="hero-monitor-label"><span class="live-dot"></span> Patriot Drive Time · New</div>
-      <div class="drive-countdown" id="driveCountdown" role="timer" aria-label="Countdown to Patriot Drive Time launch">
-        <span class="drive-daysgroup" id="dcDaysWrap"><span class="drive-unit"><b id="dc-d">00</b><span>days</span></span><span class="drive-sep">:</span></span>
-        <span class="drive-unit"><b id="dc-h">00</b><span>hrs</span></span>
-        <span class="drive-sep">:</span>
-        <span class="drive-unit"><b id="dc-m">00</b><span>min</span></span>
-        <span class="drive-sep">:</span>
-        <span class="drive-unit"><b id="dc-s">00</b><span>sec</span></span>
-      </div>
-      <p class="drive-pitch">Talk with <em>Chas himself</em> — live voice, every weekday drive home.</p>
-      <div class="drive-doors">Doors open Monday · 3:00 PM ET</div>
-      <div class="drive-live" id="driveLive"><span class="live-dot"></span> The room is open — Chas is live</div>
-      <a href="https://join.patriotchute.com/" target="_blank" rel="noopener" class="btn btn-primary drive-cta" id="driveCta">Get Personal Access <span class="arrow">→</span></a>
+    <aside class="hero-monitor">
+      <div class="hero-monitor-label"><span class="live-dot"></span> Members Only · A Private Patriot Network</div>
+      <p class="hero-monitor-quote">
+        The broadcast is free. The <em>Underground</em> is the private community behind it — where patriots actually meet. 50 state rooms, live voice chat any hour, and Coffee with Chas every morning at 9. It's not a feed you watch. It's a room you're in.
+      </p>
+      <a href="#liveStream" class="hero-monitor-cue">▶ Watch today's broadcast live below ↓</a>
     </aside>
   </div>
 </section>
@@ -116,6 +108,27 @@
   <div class="watch-live-stream-wrap">
     <div id="boxcast-widget-camchjsm3ribblsbfb7c" class="watch-live-stream"></div>
     <script type="text/javascript" charset="utf-8">(function(d, s, c, o) {var js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];js.src = '//js.boxcast.com/v3.min.js';js.onload = function() { boxcast.noConflict()('#boxcast-widget-'+c).loadChannel(c, o); };js.charset = 'utf-8';fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'camchjsm3ribblsbfb7c', {"showTitle":1,"showDescription":1,"showHighlights":1,"showRelated":true,"defaultVideo":"next","playInline":false,"dvr":true,"market":"smb","showCountdown":true,"showDonations":true,"showDocuments":true,"showIndex":true,"showChat":true,"hidePreBroadcastTextOverlay":false,"layout":"playlist-to-right"}));</script>
+  </div>
+</section>
+
+<!-- PATRIOT DRIVE TIME — full-width launch countdown (flip-clock banner) -->
+<section class="drive-launch" id="driveLaunch">
+  <div class="container">
+    <div class="dt-eyebrow">◉ Big News // From the Underground</div>
+    <h2 class="dt-headline">Patriot <span class="red">Drive Time</span> is coming</h2>
+    <p class="dt-sub">The first ride ever — live voice with <strong>Chas</strong>, every weekday drive home. Doors open Monday · 3:00 PM ET.</p>
+    <div class="dt-clock" role="timer" aria-label="Countdown to the first Patriot Drive Time">
+      <div class="dt-cell"><div class="dt-card"><b id="dt-d">00</b></div><div class="dt-label">Days</div></div>
+      <div class="dt-cell"><div class="dt-card"><b id="dt-h">00</b></div><div class="dt-label">Hours</div></div>
+      <div class="dt-cell"><div class="dt-card"><b id="dt-m">00</b></div><div class="dt-label">Minutes</div></div>
+      <div class="dt-cell"><div class="dt-card"><b id="dt-s">00</b></div><div class="dt-label">Seconds</div></div>
+    </div>
+    <div class="dt-live" id="dtLive"><span class="live-dot"></span> We're live — the first ride is rolling</div>
+    <div class="dt-actions">
+      <a href="https://join.patriotchute.com/" target="_blank" rel="noopener" class="dt-cta" id="dtCta">Claim My Seat <span class="arrow">→</span></a>
+      <!-- Discount code goes here once provided, e.g. “· CODE DRIVETIME20” -->
+      <div class="dt-offer">⚡ One-time 20% off — only while the clock runs</div>
+    </div>
   </div>
 </section>
 
@@ -449,10 +462,10 @@
       <h4>Navigate</h4>
       <ul>
         <li><a href="./index.html">Home</a></li>
-        <li><a href="./partners.html">Our Partners</a></li>
+        <li><a href="./partners.html">Partners</a></li>
           <li><a href="./donate.html">Donate</a></li>
-        <li><a href="#team">Meet The Team</a></li>
-        <li><a href="./contact.html">Contact Us</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="./contact.html">Contact</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -486,30 +499,26 @@
 <script>
 (function(){
   /* ── LAUNCH CONFIG — change this ONE line ──────────────────────
-     3:00 PM ET (Aug = EDT)  → '2026-08-03T15:00:00-04:00'
-     3:00 PM MST             → '2026-08-03T15:00:00-07:00'
-     Next Monday, 3 PM ET    → '2026-08-10T15:00:00-04:00'      */
+     3:00 PM ET (Aug = EDT)  → '2026-08-10T15:00:00-04:00'
+     3:00 PM MST             → '2026-08-10T15:00:00-07:00'      */
   var DRIVE_LAUNCH = new Date('2026-08-10T15:00:00-04:00');
 
-  var monitor = document.getElementById('driveMonitor');
-  if (!monitor) return;
+  var sec = document.getElementById('driveLaunch');
+  if (!sec) return;
   var pad = function(n){ return (n<10?'0':'')+n; };
   function tick(){
     var diff = DRIVE_LAUNCH - Date.now();
     if (diff <= 0) {
-      monitor.classList.add('is-live');
-      var cta = document.getElementById('driveCta');
-      if (cta) cta.innerHTML = 'Walk In Now — Chas Is Live <span class="arrow">→</span>';
+      sec.classList.add('is-live');
+      var cta = document.getElementById('dtCta');
+      if (cta) cta.innerHTML = 'Jump In Now <span class="arrow">→</span>';
       return;
     }
     var s = Math.floor(diff/1000);
-    var d = Math.floor(s/86400);
-    var daysWrap = document.getElementById('dcDaysWrap');
-    if (daysWrap) daysWrap.style.display = d > 0 ? '' : 'none';
-    document.getElementById('dc-d').textContent = pad(d);
-    document.getElementById('dc-h').textContent = pad(Math.floor(s%86400/3600));
-    document.getElementById('dc-m').textContent = pad(Math.floor(s%3600/60));
-    document.getElementById('dc-s').textContent = pad(s%60);
+    document.getElementById('dt-d').textContent = pad(Math.floor(s/86400));
+    document.getElementById('dt-h').textContent = pad(Math.floor(s%86400/3600));
+    document.getElementById('dt-m').textContent = pad(Math.floor(s%3600/60));
+    document.getElementById('dt-s').textContent = pad(s%60);
     setTimeout(tick, 250);
   }
   tick();
