@@ -410,3 +410,29 @@
   .dt-card { width: 40vw; }
   .drive-launch { padding: 64px 20px 72px; }
 }
+
+/* --- Hero media frame (Higgsfield animated scene placeholder) --- */
+.hero-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  overflow: hidden;
+  border: 1px solid rgba(201, 166, 96, 0.25);
+  background:
+    radial-gradient(ellipse at 65% 30%, rgba(30, 47, 77, 0.55) 0%, transparent 60%),
+    radial-gradient(ellipse at 30% 80%, rgba(200, 16, 46, 0.10) 0%, transparent 55%),
+    linear-gradient(180deg, #141416 0%, #0C0C0E 100%);
+}
+.hero-media-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero-media-note {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 18px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+}
