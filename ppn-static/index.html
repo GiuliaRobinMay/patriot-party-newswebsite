@@ -122,8 +122,7 @@
     <div class="dt-live" id="dtLive"><span class="live-dot"></span> We're live — the first ride is rolling</div>
     <div class="dt-actions">
       <a href="https://join.patriotchute.com/" target="_blank" rel="noopener" class="dt-cta" id="dtCta">Claim My Seat <span class="arrow">→</span></a>
-      <!-- Discount code goes here once provided, e.g. “· CODE DRIVETIME20” -->
-      <div class="dt-offer">⚡ One-time 20% off — only while the clock runs</div>
+      <div class="dt-offer" id="dtOffer">⚡ One-time 20% off — code <strong>DRIVETIME20</strong> · countdown &amp; launch day only</div>
     </div>
   </div>
 </section>
@@ -498,9 +497,13 @@
      3:00 PM ET (Aug = EDT)  → '2026-08-10T15:00:00-04:00'
      3:00 PM MST             → '2026-08-10T15:00:00-07:00'      */
   var DRIVE_LAUNCH = new Date('2026-08-10T15:00:00-04:00');
+  /* the promo code stays visible through launch day, then disappears */
+  var OFFER_END = new Date('2026-08-11T00:00:00-04:00');
 
   var sec = document.getElementById('driveLaunch');
   if (!sec) return;
+  var offer = document.getElementById('dtOffer');
+  if (offer && Date.now() >= OFFER_END) { offer.style.display = 'none'; }
   var pad = function(n){ return (n<10?'0':'')+n; };
   function tick(){
     var diff = DRIVE_LAUNCH - Date.now();
