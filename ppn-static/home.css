@@ -448,7 +448,7 @@
     linear-gradient(90deg, rgba(12, 12, 14, 0.85) 0%, rgba(12, 12, 14, 0.5) 38%, rgba(12, 12, 14, 0) 58%),
     linear-gradient(180deg, rgba(12, 12, 14, 0.35) 0%, transparent 18%, transparent 86%, rgba(12, 12, 14, 0.9) 100%);
 }
-.hero-flag-bg { display: none; }
+.hero-flag-bg { z-index: 2; opacity: 0.05; }
 
 /* spacious cinematic hero — full scene visible */
 .hero--home { min-height: 92svh; display: flex; align-items: center; }
