@@ -428,7 +428,7 @@
 }
   50% { opacity: 1; }
 }
-.hero-scene-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% 42%; }
+.hero-scene-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
 .hero-scene-note {
   position: absolute;
   left: 24px; bottom: 18px;
