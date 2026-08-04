@@ -426,18 +426,7 @@
     radial-gradient(ellipse 55% 45% at 20% 0%, rgba(26, 26, 29, 0.9) 0%, transparent 70%),
     linear-gradient(180deg, #0A0A0C 0%, #101014 55%, #0C0C0E 100%);
 }
-  50% { opacity: 1; }
-}
 .hero-scene-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
-.hero-scene-note {
-  position: absolute;
-  left: 24px; bottom: 18px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(232, 223, 202, 0.4);
-}
 /* legibility scrim between the scene and the type */
 .hero-scene-scrim {
   position: absolute;
@@ -458,6 +447,7 @@
   mask-image: linear-gradient(90deg, black 55%, transparent 100%);
 }
 
-/* spacious cinematic hero — full scene visible */
-.hero--home { min-height: 92svh; display: flex; align-items: center; }
+/* spacious cinematic hero — height locked to the video's 2:1 frame so the
+   composition never shifts between screens (capped by the viewport) */
+.hero--home { min-height: clamp(520px, 50vw, 92svh); display: flex; align-items: center; }
 .hero--home .hero-inner { width: 100%; }
