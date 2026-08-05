@@ -93,6 +93,20 @@
 .inside-card{border:1px solid rgba(201,166,96,.2);background:#121215;padding:22px 20px;border-radius:6px}
 .inside-card h4{font-family:'Anton',sans-serif;font-size:18px;text-transform:uppercase;color:var(--parchment);margin:0 0 8px}
 .inside-card p{font-family:'Fraunces',serif;font-size:14.5px;line-height:1.5;color:rgba(245,240,230,.72);margin:0}
+/* feature cards (what's waiting inside) */
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.feat{background:#121215;border:1px solid rgba(201,166,96,.22);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.feat-media{position:relative;height:250px;background:#0C0C0E;overflow:hidden}
+.feat-media img{width:100%;height:100%;object-fit:cover;opacity:.5;filter:saturate(.9)}
+.feat-soon{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--parchment);background:rgba(10,10,12,.75);border:1px dashed rgba(201,166,96,.5);padding:8px 14px;border-radius:4px;white-space:nowrap}
+.feat-body{padding:24px 26px 28px}
+.feat-pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;padding:7px 13px;border-radius:999px;margin-bottom:14px}
+.feat-pill.red{background:var(--flag-red);color:#fff}
+.feat-pill.gold{background:var(--brass);color:#241B08}
+.feat h3{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(21px,2.4vw,27px);color:var(--parchment);margin:0 0 10px}
+.feat p{font-family:'Fraunces',serif;font-size:15.5px;line-height:1.55;color:rgba(245,240,230,.75);margin:0}
+.feat p strong{color:var(--bone)}
+@media (max-width:820px){.feat-grid{grid-template-columns:1fr}.feat-media{height:210px}}
 /* objections */
 .answers{padding:70px 32px;background:#0C0C0E}
 .answers-inner{max-width:1080px;margin:0 auto}
@@ -201,8 +215,6 @@
 
     <div class="between">And between the shows — the room never closes</div>
 
-    <div class="inside-grid" style="margin-top:6px">
-      <div class="inside-card"><h4>💬 Chat with patriots</h4><p>2,000+ active patriots talking all day — real conversations with people who see what you see.</p></div>
       <div class="inside-card"><h4>📡 The uncensored stream</h4><p>An ongoing feed of underground news — raw, ahead of the headlines, the version the platforms won't carry.</p></div>
       <div class="inside-card"><h4>🗺 Specialized rooms</h4><p>Your state's room plus focused channels by topic — find the conversation that's yours.</p></div>
       <div class="inside-card"><h4>🎙 The PPN talk</h4><p>Exclusive access to Chas, Warren and the team — ask directly, get answers in the room, not in a comment section.</p></div>
@@ -232,15 +244,48 @@
   </div>
 </section>
 
-<!-- WHAT'S INSIDE -->
+<!-- WHAT'S WAITING INSIDE — feature cards -->
 <section class="inside">
   <div class="inside-inner">
     <h2>What's waiting inside</h2>
-    <div class="inside-grid">
-      <div class="inside-card"><h4>Your state's room</h4><p>All 50 states, each with its own room. The patriots in your zip code are already in yours.</p></div>
-      <div class="inside-card"><h4>Live voice channels</h4><p>Not comment sections — actual conversations, in real time, with the team in the room.</p></div>
-      <div class="inside-card"><h4>The uncensored feed</h4><p>The version of the news we can't put on YouTube. Raw, ahead of the headlines.</p></div>
-      <div class="inside-card"><h4>The daily shows</h4><p>Coffee with Chas at 9AM CT. Patriot Drive Time weekdays at 3PM ET. Members only.</p></div>
+    <div class="feat-grid">
+
+      <article class="feat" id="slot-rooms">
+        <div class="feat-media"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3HBpPG4au02JHQnNtfHuixe9AKw/hf_20260805_103325_13424f6d-edf7-4b34-a40f-9910d2f6976f.png" alt="" loading="lazy"><span class="feat-soon">📸 Live screenshot coming</span></div>
+        <div class="feat-body">
+          <span class="feat-pill red">State Rooms</span>
+          <h3>Your state has a room</h3>
+          <p>All <strong>50 states</strong>, each with its own channel. The patriots in your zip code are already talking — real conversations with people who live where you live.</p>
+        </div>
+      </article>
+
+      <article class="feat" id="slot-voice">
+        <div class="feat-media"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3HBpPG4au02JHQnNtfHuixe9AKw/hf_20260805_103325_13424f6d-edf7-4b34-a40f-9910d2f6976f.png" alt="" loading="lazy"><span class="feat-soon">📸 Live screenshot coming</span></div>
+        <div class="feat-body">
+          <span class="feat-pill gold">Live Voice</span>
+          <h3>Voice channels, not comment sections</h3>
+          <p>Drop into live voice with the team and <strong>2,000+ patriots</strong>. Ask out loud, get answered on the spot — no typing into the void.</p>
+        </div>
+      </article>
+
+      <article class="feat" id="slot-feed">
+        <div class="feat-media"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3HBpPG4au02JHQnNtfHuixe9AKw/hf_20260805_103325_13424f6d-edf7-4b34-a40f-9910d2f6976f.png" alt="" loading="lazy"><span class="feat-soon">📸 Live screenshot coming</span></div>
+        <div class="feat-body">
+          <span class="feat-pill red">The Feed</span>
+          <h3>The uncensored stream</h3>
+          <p>An ongoing feed of underground news — <strong>raw, ahead of the headlines</strong>, the version the platforms won't carry.</p>
+        </div>
+      </article>
+
+      <article class="feat" id="slot-shows">
+        <div class="feat-media"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3HBpPG4au02JHQnNtfHuixe9AKw/hf_20260805_103325_13424f6d-edf7-4b34-a40f-9910d2f6976f.png" alt="" loading="lazy"><span class="feat-soon">📸 Live screenshot coming</span></div>
+        <div class="feat-body">
+          <span class="feat-pill gold">The Shows</span>
+          <h3>Chas, live, twice a day</h3>
+          <p><strong>Coffee with Chas, 9AM CT</strong> and <strong>Drive Time, weekdays 3PM ET</strong> — members only, chat open, your questions answered while the news is still warm.</p>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
