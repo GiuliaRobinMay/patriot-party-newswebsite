@@ -132,8 +132,8 @@
   <div class="pc-shell">
     <h3 class="partners-heading pc-heading">The Partners We Stand With</h3>
     <p class="pc-kicker">◉ Patriot-owned · vetted · use code PPN at most</p>
-    <div class="pc-stage" id="pcStage" aria-roledescription="carousel" aria-label="PPN partners"></div>
-    <div class="pc-dots" id="pcDots"></div>
+    <div class="prow" id="prow" aria-label="PPN partners"></div>
+    <p class="prow-hint">Tap a partner for details &amp; codes</p>
   </div>
 </section>
 
@@ -451,6 +451,19 @@
 <script src="./assets/js/main.js"></script>
 
 
+<!-- partner detail modal -->
+<div class="pmodal" id="pmodal" role="dialog" aria-modal="true" hidden>
+  <div class="pmodal-card">
+    <button class="pmodal-x" id="pmodalX" aria-label="Close">×</button>
+    <div class="pmodal-logo" id="pmLogo"></div>
+    <div class="pmodal-tag" id="pmTag"></div>
+    <h4 class="pmodal-name" id="pmName"></h4>
+    <p class="pmodal-desc" id="pmDesc"></p>
+    <div><span class="pmodal-code" id="pmCode"></span></div>
+    <a class="pmodal-visit" id="pmVisit" href="#">Visit →</a>
+  </div>
+</div>
+
 <!-- "We interrupt this feed" popup -->
 <div class="ppn-overlay" id="ppnOverlay" role="dialog" aria-modal="true" aria-labelledby="popH" hidden>
   <div class="ppn-pop">
@@ -480,54 +493,41 @@
    {n:"Fresh Mouth Club",t:"Health",d:"“The future of brushing” — sonic toothbrushes, toothpaste, floss and UV sanitizers in easy subscription kits.",code:"PPN Partner",u:"https://www.freshmouth.club/?ref=THEPATRIOTPARTYNEWS",img:"https://www.freshmouth.club/cdn/shop/files/fmc_logo_1.png",light:1},
    {n:"Miles Franklin",t:"Precious Metals",d:"Family-owned gold and silver dealer since 1989 — A+ BBB rating, $12B+ in sales, strict consumer protections.",code:"Email for PPN price list",u:"mailto:info@milesfranklin.com?subject=PPN%20Price%20List%20Request"}
   ];
-  var stage=document.getElementById('pcStage'),dots=document.getElementById('pcDots');
-  if(!stage)return;
-  var cur=0,N=P.length,timer=null;
-  P.forEach(function(p,i){
-    var el=document.createElement('article');
-    el.className='pcard3'+(p.gold?' gold':'');
-    var box='<div class="logo-box'+(p.light?' light':'')+(p.cover?' cover':'')+'">';
-    if(p.img){box+='<img src="'+p.img+'" alt="'+p.n+'" loading="lazy">';}
-    else{box+='<div class="pc-wordmark">'+p.n+'</div>';}
-    box+='</div>';
-    el.innerHTML=box+'<div class="p-tag">'+p.t+'</div><h5>'+p.n+'</h5><p class="p-desc">'+p.d+'</p>'
-      +'<div><span class="p-code">'+p.code+'</span></div>'
-      +'<a class="p-visit" href="'+p.u+'"'+(p.u.indexOf('mailto:')===0?'':' target="_blank" rel="noopener"')+'>Visit →</a>';
-    var im=el.querySelector('img');
-    if(im){im.addEventListener('error',function(){this.parentNode.innerHTML='<div class="pc-wordmark">'+p.n+'</div>';});}
-    el.addEventListener('click',function(e){if(i!==cur){e.preventDefault();go(i);}});
-    stage.appendChild(el);
-    var d=document.createElement('button');d.className='pc-dot';d.setAttribute('aria-label',p.n);
-    d.addEventListener('click',function(){go(i)});dots.appendChild(d);
-  });
-  var cards=stage.querySelectorAll('.pcard3');
-  function layout(){
-    var spread=Math.min(stage.clientWidth*0.23,380);
-    for(var i=0;i<N;i++){
-      var off=((i-cur)%N+N)%N; if(off>N/2)off-=N;
-      var el=cards[i],a=Math.abs(off);
-      if(a>3){el.style.opacity=0;el.style.pointerEvents='none';el.style.transform='translateX(0) scale(.5)';el.style.zIndex=0;continue;}
-      el.style.opacity=1;
-      el.style.pointerEvents='auto';
-      el.style.zIndex=String(10-a);
-      el.style.filter='none';
-      var sc=a===0?1.14:(1-a*.1);
-      el.style.transform='translateX('+(off*spread)+'px) scale('+sc+') rotateY('+(off*-6)+'deg)';
-      el.classList.toggle('focus',a===0);
-    }
-    var ds=dots.querySelectorAll('.pc-dot');
-    for(var j=0;j<ds.length;j++){ds[j].classList.toggle('on',j===cur);}
+  var row=document.getElementById('prow');
+  if(!row)return;
+  var modal=document.getElementById('pmodal');
+  function openModal(p){
+    document.getElementById('pmLogo').innerHTML = p.img ? '<img src="'+p.img+'" alt="'+p.n+'">' : '<div class="pc-wordmark">'+p.n+'</div>';
+    document.getElementById('pmLogo').className = 'pmodal-logo'+(p.light?' light':'')+(p.gold?' goldp':'');
+    document.getElementById('pmTag').textContent = p.t;
+    document.getElementById('pmName').textContent = p.n;
+    document.getElementById('pmDesc').textContent = p.d;
+    document.getElementById('pmCode').textContent = p.code;
+    var v = document.getElementById('pmVisit'); v.href = p.u;
+    if(p.u.indexOf('mailto:')===0){v.removeAttribute('target');}else{v.setAttribute('target','_blank');v.setAttribute('rel','noopener');}
+    modal.hidden=false; requestAnimationFrame(function(){modal.classList.add('open')});
   }
-  function go(i){cur=((i%N)+N)%N;layout();restart();}
-  function next(){go(cur+1)} function prev(){go(cur-1)}
-  var pa=document.createElement('button');pa.className='pc-arrow pc-prev';pa.innerHTML='‹';pa.setAttribute('aria-label','Previous partner');pa.addEventListener('click',prev);
-  var na=document.createElement('button');na.className='pc-arrow pc-next';na.innerHTML='›';na.setAttribute('aria-label','Next partner');na.addEventListener('click',next);
-  stage.appendChild(pa);stage.appendChild(na);
-  function restart(){if(timer)clearInterval(timer);timer=setInterval(next,3000)}
-  stage.addEventListener('mouseover',function(e){if(e.target.closest('.pcard3.focus')&&timer)clearInterval(timer)});
-  stage.addEventListener('mouseout',function(e){if(e.target.closest('.pcard3.focus'))restart()});
-  window.addEventListener('resize',layout);
-  layout();restart();
+  function closeModal(){modal.classList.remove('open');modal.hidden=true;}
+  P.forEach(function(p,i){
+    var el=document.createElement('button');
+    el.type='button';
+    el.className='ptile'+(p.gold?' gold':'')+(p.light?' light':'')+(p.cover?' cover':'');
+    el.innerHTML=(p.img?'<img src="'+p.img+'" alt="" loading="lazy">':'<span class="ptile-mark">'+p.n+'</span>')
+      +'<span class="ptile-name">'+p.n+'</span>';
+    var im=el.querySelector('img');
+    if(im){im.addEventListener('error',function(){var m=document.createElement('span');m.className='ptile-mark';m.textContent=p.n;this.replaceWith(m);});}
+    el.addEventListener('click',function(){openModal(p)});
+    row.appendChild(el);
+  });
+  document.getElementById('pmodalX').addEventListener('click',closeModal);
+  modal.addEventListener('click',function(e){if(e.target===modal)closeModal()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+  /* traveling highlight so the row feels alive without moving click targets */
+  var tiles=row.querySelectorAll('.ptile'),wi=0;
+  setInterval(function(){
+    tiles.forEach(function(t){t.classList.remove('wave')});
+    tiles[wi%tiles.length].classList.add('wave');wi++;
+  },900);
 })();
 
 /* "We interrupt this feed" popup: once per visit, on deep scroll or exit intent */
