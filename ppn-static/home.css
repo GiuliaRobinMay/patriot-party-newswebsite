@@ -564,3 +564,16 @@
 .pmodal-x{position:absolute;top:8px;right:12px;background:none;border:none;color:#B5AE9B;font-size:22px;cursor:pointer}
 .pmodal-x:hover{color:#F2E9D5}
 @media (prefers-reduced-motion:reduce){.ptile{transition:none}.ptile.wave{transform:none}}
+
+
+/* stream player + live chat side by side */
+.stream-row{display:flex;gap:18px;align-items:stretch;max-width:1200px;margin:0 auto}
+.stream-player-col{flex:1;min-width:0}
+.stream-chat{flex:0 0 340px;background:#101013;border:1px solid rgba(201,166,96,.22);border-radius:6px;overflow:hidden}
+.stream-chat iframe{width:100%;height:100%;min-height:540px;border:0;display:block}
+@media (max-width:960px){.stream-row{flex-direction:column}.stream-chat{flex:auto}.stream-chat iframe{min-height:430px}}
+/* transitional links */
+a.pop-invite{display:block;margin-top:14px;font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:#CFC6AE;text-decoration:underline;text-underline-offset:3px}
+a.pop-invite:hover{color:#F2E9D5}
+.final-more{display:inline-block;margin-top:16px;font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--bone-dim);text-decoration:underline;text-underline-offset:3px}
+.final-more:hover{color:var(--parchment)}
