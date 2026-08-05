@@ -19,7 +19,13 @@
 <link rel="stylesheet" href="./style.css">
 <style>
 /* ── join page ── */
-.jhero{position:relative;padding:96px 32px 72px;overflow:hidden}
+.jhero{position:relative;padding:110px 32px 86px;overflow:hidden;min-height:min(88svh,860px);display:flex;align-items:center}
+.jhero-scene{position:absolute;inset:0;z-index:0}
+.jhero-scene video{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.jhero-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(12,12,14,.88) 0%,rgba(12,12,14,.55) 45%,rgba(12,12,14,.25) 70%),linear-gradient(180deg,rgba(12,12,14,.4) 0%,transparent 25%,transparent 75%,rgba(12,12,14,.95) 100%)}
+.jhero-inner{position:relative;z-index:3;width:100%}
+.jstats{position:relative;z-index:3;max-width:1200px;margin:44px auto 0;display:flex;flex-wrap:wrap;gap:10px 34px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-dim);border-top:1px solid rgba(201,166,96,.25);padding-top:18px}
+.jstats b{color:var(--parchment);font-weight:500}
 .jhero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:center}
 .jhero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--brass);margin-bottom:18px}
 .jhero h1{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(38px,5vw,66px);line-height:.98;color:var(--parchment);margin:0 0 20px}
@@ -59,8 +65,19 @@
 .show-body p{font-family:'Fraunces',serif;font-size:16px;line-height:1.55;color:rgba(245,240,230,.78);margin:0 0 10px;max-width:62ch}
 .show-chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);border:1px dashed var(--brass-dim);padding:6px 10px;border-radius:3px}
 .show-chip.hot{color:var(--flag-red-bright);border-color:rgba(232,24,46,.5)}
+.live-chip{border-style:solid;border-color:rgba(201,166,96,.5);background:rgba(201,166,96,.07)}
+.live-chip b{color:var(--parchment);font-variant-numeric:tabular-nums}
 .between{display:flex;align-items:center;gap:14px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim);margin:10px 4px 28px;justify-content:center;text-align:center}
 .between::before,.between::after{content:"";flex:1;height:1px;background:rgba(201,166,96,.2)}
+/* red break */
+.jred{background:linear-gradient(180deg,var(--flag-red) 0%,#A50E26 100%);padding:46px 32px}
+.jred-inner{max-width:980px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px 36px}
+.jred-text{text-align:left}
+.jred h2{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(24px,3.4vw,40px);line-height:1;color:#fff;margin:0 0 6px}
+.jred p{font-family:'Fraunces',serif;font-size:17px;color:rgba(255,255,255,.92);margin:0}
+.jred-btn{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;background:#0C0C0E;color:var(--bone);padding:16px 28px;border-radius:3px;text-decoration:none;white-space:nowrap}
+.jred-btn:hover{background:#000}
+@media (max-width:700px){.jred-text{text-align:center}}
 /* story */
 .story{padding:84px 32px;background:radial-gradient(ellipse at 30% 0%,rgba(200,16,46,.07),transparent 55%),#0C0C0E}
 .story-inner{max-width:760px;margin:0 auto}
@@ -92,7 +109,10 @@
 .pricing-sub{font-family:'Fraunces',serif;font-size:18px;color:rgba(245,240,230,.8);margin:0 0 22px}
 .price-code{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass);margin-bottom:26px}
 .price-code b{color:var(--parchment)}
-.pricing .btn-primary{font-size:16px;padding:18px 38px}
+.btn-gold{display:inline-block;font-family:'Anton',sans-serif;font-size:23px;letter-spacing:.04em;text-transform:uppercase;color:#241B08;padding:17px 40px;border-radius:8px;text-decoration:none;background:linear-gradient(180deg,#F7DE96 0%,#E0BC6E 38%,#C9A660 55%,#96793F 100%);box-shadow:0 0 34px rgba(201,166,96,.45),inset 0 2px 3px rgba(255,255,255,.65),inset 0 -3px 6px rgba(60,40,10,.5);position:relative;overflow:hidden}
+.btn-gold::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-15deg);animation:jgold 3.2s ease-in-out infinite}
+@keyframes jgold{0%,60%{left:-60%}90%,100%{left:130%}}
+@media (prefers-reduced-motion:reduce){.btn-gold::after{animation:none}}
 .pricing-fine{margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--bone-dim)}
 @media (max-width:900px){
   .jhero-inner{grid-template-columns:1fr;gap:44px}
@@ -128,6 +148,8 @@
 
 <!-- HERO -->
 <section class="jhero scanlines">
+  <div class="jhero-scene" aria-hidden="true"><video autoplay muted loop playsinline src="./assets/img/hero-beacon.mp4"></video></div>
+  <div class="jhero-scrim" aria-hidden="true"></div>
   <div class="hero-flag-bg" aria-hidden="true"></div>
   <div class="jhero-inner">
     <div>
@@ -150,6 +172,7 @@
       </div>
     </div>
   </div>
+  <div class="jstats"><span>◉ On air since <b>2021</b></span><span><b>50</b> state rooms</span><span><b>2,000+</b> patriots inside</span><span>Coffee w/ Chas <b>9AM CT</b></span><span>Drive Time <b>3PM ET</b></span></div>
 </section>
 
 <!-- DAILY LINEUP -->
@@ -163,7 +186,7 @@
       <div class="show-body">
         <h3>☕ Coffee with Chas</h3>
         <p>Members only. Real news over first coffee — before the day starts spinning. Chas reads the morning the way the feed never will, and the room talks back. Half your state room is already in there with a mug.</p>
-        <span class="show-chip">Every morning · inside only</span>
+        <span class="show-chip">Every morning · inside only</span> <span class="show-chip live-chip">☕ Next pour in <b id="cwcCount">—</b></span>
       </div>
     </div>
 
@@ -172,7 +195,7 @@
       <div class="show-body">
         <h3>🚗 Patriot Drive Time</h3>
         <p>The drive home, live. Chas on voice, patriots from your state riding along — the afternoon news cycle, taken apart while it's still warm. First ride: Monday, August 10.</p>
-        <span class="show-chip hot" id="dtChip">⚡ Join before the first ride — one-time extra 20% · DRIVETIME20</span>
+        <span class="show-chip hot" id="dtChip">⚡ Join before the first ride — one-time extra 20% · DRIVETIME20</span> <span class="show-chip live-chip">🚗 Next ride in <b id="dtCount">—</b></span>
       </div>
     </div>
 
@@ -195,6 +218,17 @@
     <p>Then the platforms started cutting the feed. Censored, banned, throttled — the usual. So we stopped renting rooms in their house and built our own.</p>
     <p>Patriotchute is that room. Patriots connecting, speaking freely, watching each other's backs — no landlord, no algorithm. If you've been the only sane voice at your dinner table: <em>you're not alone anymore. Come sit down."</em></p>
     <div class="story-sig">— Chas · Patriot Party News</div>
+  </div>
+</section>
+
+<!-- RED BREAK -->
+<section class="jred">
+  <div class="jred-inner">
+    <div class="jred-text">
+      <h2>The algorithm shows you the trailer.</h2>
+      <p>The room is where the story lives — and it's talking right now.</p>
+    </div>
+    <a href="#pricing" class="jred-btn">Count Me In <span class="arrow">→</span></a>
   </div>
 </section>
 
@@ -229,7 +263,7 @@
     <h2>30 days <span class="red">free.</span></h2>
     <p class="pricing-sub">Then from $7.46 a month. Cancel anytime, in two clicks.</p>
     <div class="price-code" id="priceCode">Code <b>PATRIOT10X</b> — 10% off, for life</div><br>
-    <a href="https://join.patriotchute.com/join-patriotchute-undergroundcommunity" rel="noopener" target="_blank" class="btn btn-primary">Count Me In — Free for 30 Days <span class="arrow">→</span></a>
+    <a href="https://join.patriotchute.com/join-patriotchute-undergroundcommunity" rel="noopener" target="_blank" class="btn-gold">Count Me In — Free for 30 Days</a>
     <div class="pricing-fine">Secure checkout · the broadcast stays free either way</div>
   </div>
 </section>
@@ -292,6 +326,34 @@
 </footer>
 
 <script>
+/* live countdowns: next Coffee with Chas (9AM CT daily), next Drive Time (weekdays 3PM ET; first ride Aug 10) */
+(function(){
+  var LAUNCH = new Date('2026-08-10T15:00:00-04:00');
+  function pad(n){return (n<10?'0':'')+n}
+  function fmt(ms){var s=Math.floor(ms/1000);var d=Math.floor(s/86400);var h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),x=s%60;return (d>0?d+'d ':'')+pad(h)+':'+pad(m)+':'+pad(x)}
+  function nextDaily(tz,hour){
+    var now=new Date(new Date().toLocaleString('en-US',{timeZone:tz}));
+    var t=new Date(now);t.setHours(hour,0,0,0);
+    if(now>=t)t.setDate(t.getDate()+1);
+    return t-now;
+  }
+  function nextDrive(){
+    var real=Date.now();
+    if(real<LAUNCH.getTime())return LAUNCH.getTime()-real;
+    var now=new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'}));
+    var t=new Date(now);t.setHours(15,0,0,0);
+    if(now>=t)t.setDate(t.getDate()+1);
+    while(t.getDay()===0||t.getDay()===6)t.setDate(t.getDate()+1);
+    return t-now;
+  }
+  function tick(){
+    var c=document.getElementById('cwcCount'),d=document.getElementById('dtCount');
+    if(c)c.textContent=fmt(nextDaily('America/Chicago',9));
+    if(d)d.textContent=fmt(nextDrive());
+    setTimeout(tick,1000);
+  }
+  tick();
+})();
 (function(){
   var driveEnd = new Date('2026-08-11T00:00:00-04:00');
   if (Date.now() >= driveEnd.getTime()) {
