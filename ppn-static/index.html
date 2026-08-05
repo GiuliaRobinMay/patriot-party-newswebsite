@@ -454,7 +454,6 @@
 <!-- "We interrupt this feed" popup -->
 <div class="ppn-overlay" id="ppnOverlay" role="dialog" aria-modal="true" aria-labelledby="popH" hidden>
   <div class="ppn-pop">
-    <div class="glitch-streaks" aria-hidden="true"></div>
     <div class="colorbars" aria-hidden="true"><i class="cb1"></i><i class="cb2"></i><i class="cb3"></i><i class="cb4"></i><i class="cb5"></i><i class="cb6"></i><i class="cb7"></i><i class="cb8"></i><i class="cb9"></i></div>
     <button class="pop-x" id="popX" aria-label="Close">×</button>
     <div class="pop-eyebrow blink">We interrupt this feed</div>
@@ -503,6 +502,7 @@
   });
   var cards=stage.querySelectorAll('.pcard3');
   function layout(){
+    var spread=Math.min(stage.clientWidth*0.23,380);
     for(var i=0;i<N;i++){
       var off=((i-cur)%N+N)%N; if(off>N/2)off-=N;
       var el=cards[i],a=Math.abs(off);
@@ -511,7 +511,7 @@
       el.style.pointerEvents='auto';
       el.style.zIndex=String(10-a);
       el.style.filter=a===0?'none':'brightness('+(1-a*.22)+') blur('+(a*.4)+'px)';
-      el.style.transform='translateX('+(off*46)+'%) scale('+(1-a*.13)+') rotateY('+(off*-6)+'deg)';
+      el.style.transform='translateX('+(off*spread)+'px) scale('+(1-a*.13)+') rotateY('+(off*-6)+'deg)';
       el.classList.toggle('focus',a===0);
     }
     var ds=dots.querySelectorAll('.pc-dot');
@@ -522,10 +522,10 @@
   var pa=document.createElement('button');pa.className='pc-arrow pc-prev';pa.innerHTML='‹';pa.setAttribute('aria-label','Previous partner');pa.addEventListener('click',prev);
   var na=document.createElement('button');na.className='pc-arrow pc-next';na.innerHTML='›';na.setAttribute('aria-label','Next partner');na.addEventListener('click',next);
   stage.appendChild(pa);stage.appendChild(na);
-  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function restart(){if(timer)clearInterval(timer);if(!reduced)timer=setInterval(next,3000)}
+  function restart(){if(timer)clearInterval(timer);timer=setInterval(next,3000)}
   stage.addEventListener('mouseover',function(e){if(e.target.closest('.pcard3.focus')&&timer)clearInterval(timer)});
   stage.addEventListener('mouseout',function(e){if(e.target.closest('.pcard3.focus'))restart()});
+  window.addEventListener('resize',layout);
   layout();restart();
 })();
 
