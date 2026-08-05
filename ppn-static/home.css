@@ -496,8 +496,8 @@
 }
 
 /* ═══ "We interrupt this feed" popup ═══ */
-.ppn-overlay{position:fixed;inset:0;background:rgba(6,6,8,.82);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:900;padding:20px;opacity:0;transition:opacity .25s}
-.ppn-overlay.open{opacity:1}
+.ppn-overlay{position:fixed;inset:0;background:rgba(6,6,8,.82);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:900;padding:20px;opacity:0;transition:opacity .25s}
+.ppn-overlay.open{display:flex;opacity:1}
 .ppn-pop{position:relative;max-width:560px;width:100%;border-radius:18px;padding:64px 44px 30px;text-align:center;background:linear-gradient(170deg,#232227 0%,#1B1A1E 55%,#161519 100%);box-shadow:0 40px 100px rgba(0,0,0,.8)}
 .ppn-pop::before{content:"";position:absolute;inset:0;border-radius:18px;pointer-events:none;opacity:.10;background:repeating-linear-gradient(0deg,transparent 0 2px,#000 2px 3px)}
 .ppn-pop::after{content:"";position:absolute;inset:0;border-radius:18px;pointer-events:none;opacity:.07;background-image:radial-gradient(rgba(255,255,255,.9) 1px,transparent 1px),radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:6px 8px,4px 6px;background-position:0 0,2px 3px;animation:ppnstatic .3s steps(3) infinite}
@@ -548,8 +548,8 @@
   .prow{justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:26px;-webkit-box-reflect:unset}
   .ptile{flex:0 0 130px;scroll-snap-align:center;-webkit-box-reflect:unset;height:290px}
 }
-.pmodal{position:fixed;inset:0;z-index:950;background:rgba(6,6,8,.8);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .22s}
-.pmodal.open{opacity:1}
+.pmodal{position:fixed;inset:0;z-index:950;background:rgba(6,6,8,.8);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .22s}
+.pmodal.open{display:flex;opacity:1}
 .pmodal-card{position:relative;max-width:420px;width:100%;background:#101013;border:1px solid #2A2A30;border-top:3px solid var(--flag-red);border-radius:10px;padding:28px 28px 26px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7)}
 .pmodal-logo{height:130px;display:flex;align-items:center;justify-content:center;background:#17171A;border-radius:8px;margin-bottom:16px;overflow:hidden}
 .pmodal-logo img{max-width:80%;max-height:82%;object-fit:contain}
