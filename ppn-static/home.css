@@ -458,7 +458,7 @@
 .pc-shell{border-radius:0;padding:56px 0 36px;background:radial-gradient(ellipse 90% 80% at 50% 0%,#8E1222 0%,#6E0D1B 55%,#520A14 100%)}
 .pc-heading{text-align:center;color:#F7EEDB;margin-bottom:6px}
 .pc-kicker{text-align:center;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(247,238,219,.55);margin-bottom:32px}
-.pc-stage{position:relative;height:480px;overflow:hidden;perspective:1200px}
+.pc-stage{position:relative;height:520px;overflow:hidden;perspective:1200px}
 .pcard3{position:absolute;left:50%;top:14px;width:320px;margin-left:-160px;background:#0E0E10;border:1px solid #26262B;border-radius:8px;padding:0 0 20px;text-align:center;transition:transform .5s cubic-bezier(.22,.8,.3,1),opacity .5s,filter .5s;cursor:pointer;will-change:transform;box-shadow:0 24px 60px rgba(40,0,6,.55)}
 .pcard3 .logo-box{position:relative;height:150px;display:flex;align-items:center;justify-content:center;background:#141417;border-radius:8px 8px 0 0;overflow:hidden;border-bottom:1px solid #26262B}
 .pcard3 .logo-box.light{background:#F4F1EA}
@@ -486,7 +486,7 @@
 .pc-dot{width:7px;height:7px;border-radius:50%;border:none;cursor:pointer;padding:0;background:rgba(247,238,219,.3)}
 .pc-dot.on{background:var(--brass);transform:scale(1.3)}
 @media (max-width:640px){
-  .pc-stage{height:500px}
+  .pc-stage{height:540px}
   .pcard3{width:280px;margin-left:-140px}
   .pc-prev{left:4px}.pc-next{right:4px}
 }
