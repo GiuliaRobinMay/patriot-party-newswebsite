@@ -186,7 +186,7 @@
       </div>
     </div>
   </div>
-  <div class="jstats"><span>◉ On air since <b>2021</b></span><span><b>50</b> state rooms</span><span><b>2,000+</b> patriots inside</span><span>Coffee w/ Chas <b>9AM CT</b></span><span>Drive Time <b>3PM ET</b></span></div>
+  <div class="jstats"><span>◉ On air since <b>2021</b></span><span><b>50</b> state rooms</span><span><b>2,000+</b> patriots inside</span><span>Coffee w/ Chas <b>9AM CT</b></span><span>Drive Time <b>3PM CT</b></span></div>
 </section>
 
 <!-- DAILY LINEUP -->
@@ -205,10 +205,10 @@
     </div>
 
     <div class="show">
-      <div class="show-time"><span class="onair">Weekdays</span><b>3:00 PM</b><span>Eastern</span></div>
+      <div class="show-time"><span class="onair">Weekdays</span><b>3:00 PM</b><span>Central</span></div>
       <div class="show-body">
         <h3>🚗 Patriot Drive Time</h3>
-        <p>The drive home, live. Chas on voice, patriots from your state riding along — the afternoon news cycle, taken apart while it's still warm. First ride: Monday, August 10.</p>
+        <p>The drive home, live. Chas on voice, patriots from your state riding along — the afternoon news cycle, taken apart while it's still warm. First ride: Monday, August 10, 3PM Central.</p>
         <span class="show-chip hot" id="dtChip">⚡ Join before the first ride — one-time extra 20% · DRIVETIME20</span> <span class="show-chip live-chip">🚗 Next ride in <b id="dtCount">—</b></span>
       </div>
     </div>
@@ -282,7 +282,7 @@
         <div class="feat-body">
           <span class="feat-pill gold">The Shows</span>
           <h3>Chas, live, twice a day</h3>
-          <p><strong>Coffee with Chas, 9AM CT</strong> and <strong>Drive Time, weekdays 3PM ET</strong> — members only, chat open, your questions answered while the news is still warm.</p>
+          <p><strong>Coffee with Chas, 9AM CT</strong> and <strong>Drive Time, weekdays 3PM CT</strong> — members only, chat open, your questions answered while the news is still warm.</p>
         </div>
       </article>
 
@@ -371,9 +371,9 @@
 </footer>
 
 <script>
-/* live countdowns: next Coffee with Chas (9AM CT daily), next Drive Time (weekdays 3PM ET; first ride Aug 10) */
+/* live countdowns: next Coffee with Chas (9AM CT daily), next Drive Time (weekdays 3PM CT; first ride Aug 10) */
 (function(){
-  var LAUNCH = new Date('2026-08-10T15:00:00-04:00');
+  var LAUNCH = new Date('2026-08-10T15:00:00-05:00');
   function pad(n){return (n<10?'0':'')+n}
   function fmt(ms){var s=Math.floor(ms/1000);var d=Math.floor(s/86400);var h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),x=s%60;return (d>0?d+'d ':'')+pad(h)+':'+pad(m)+':'+pad(x)}
   function nextDaily(tz,hour){
@@ -385,7 +385,7 @@
   function nextDrive(){
     var real=Date.now();
     if(real<LAUNCH.getTime())return LAUNCH.getTime()-real;
-    var now=new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'}));
+    var now=new Date(new Date().toLocaleString('en-US',{timeZone:'America/Chicago'}));
     var t=new Date(now);t.setHours(15,0,0,0);
     if(now>=t)t.setDate(t.getDate()+1);
     while(t.getDay()===0||t.getDay()===6)t.setDate(t.getDate()+1);
