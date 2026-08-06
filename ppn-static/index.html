@@ -129,6 +129,7 @@
     <div class="dt-actions">
       <a href="https://www.patriotchute.com/users/onboarding/choose_plan?plan_id=2267386&amp;bundle_token=8a2bad0893042bd83ecd59267a9b1d16&amp;prefer_signup=true&amp;utm_source=manual" class="dt-cta" id="dtCta">Claim My Seat <span class="arrow">→</span></a>
       <div class="dt-offer" id="dtOffer">⚡ One-time 20% off — code <strong>DRIVETIME20</strong> · countdown &amp; launch day only</div>
+      <a class="cta-more" href="./join.html">What is Patriot Drive Time? See inside first →</a>
     </div>
   </div>
 </section>
@@ -164,6 +165,7 @@
       <a href="https://www.patriotchute.com/users/onboarding/choose_plan?plan_id=2267386&amp;bundle_token=8a2bad0893042bd83ecd59267a9b1d16&amp;prefer_signup=true&amp;utm_source=manual" class="btn btn-primary">
         Be in the room by 9AM CT <span class="arrow">→</span>
       </a>
+      <div><a class="cta-more" href="./join.html">What happens in Coffee with Chas? →</a></div>
     </div>
     <p class="coffee-fineprint">30 days free. Most don't walk. · Code <strong>PATRIOT10X</strong> for 10% off.</p>
   </div>
@@ -176,7 +178,10 @@
       <h2 class="join-banner-head">The Underground is open.</h2>
       <p class="join-banner-sub">You're either in the room or you're watching the door. 30 days free — most don't walk.</p>
     </div>
-    <a href="https://www.patriotchute.com/users/onboarding/choose_plan?plan_id=2267386&amp;bundle_token=8a2bad0893042bd83ecd59267a9b1d16&amp;prefer_signup=true&amp;utm_source=manual" class="btn btn-primary">Count Me In <span class="arrow">→</span></a>
+    <div class="join-banner-cta">
+      <a href="https://www.patriotchute.com/users/onboarding/choose_plan?plan_id=2267386&amp;bundle_token=8a2bad0893042bd83ecd59267a9b1d16&amp;prefer_signup=true&amp;utm_source=manual" class="btn btn-primary">Count Me In <span class="arrow">→</span></a>
+      <a class="cta-more cta-more--on-red" href="./join.html">Show me what's inside first →</a>
+    </div>
   </div>
 </section>
 
@@ -270,6 +275,7 @@
         <a href="https://www.patriotchute.com/users/onboarding/choose_plan?plan_id=2267386&amp;bundle_token=8a2bad0893042bd83ecd59267a9b1d16&amp;prefer_signup=true&amp;utm_source=manual" class="btn btn-primary">
           I Want In — 30 Days Free <span class="arrow">→</span>
         </a>
+        <a class="cta-more" href="./join.html#pricing">Compare what's included →</a>
       </aside>
     </div>
   </div>
@@ -538,33 +544,83 @@
   },900);
 })();
 
-/* "We interrupt this feed" popup: once per visit, on deep scroll or exit intent */
+/* "We interrupt this feed" popup.
+   Timing is deliberate: this is a long editorial page with a live stream on it,
+   so an early interrupt costs us the viewer. Nothing may fire for the first
+   MIN_DWELL of ENGAGED time (time with the tab actually visible). After that
+   the popup waits for a real signal — the reader going idle, reading past
+   SCROLL_AT, or heading for the exit — with MAX_DWELL as a backstop.
+   Once per visit; a deliberate dismissal snoozes it for a week. */
 (function(){
+  var MIN_DWELL  = 30000;  /* hard floor — no popup before 30s of engaged time */
+  var IDLE_AFTER = 15000;  /* then: 15s with no scroll, move, tap or keypress  */
+  var SCROLL_AT  = 0.55;   /* or: 55% of the page read                         */
+  var MAX_DWELL  = 75000;  /* or: 75s engaged, as a backstop                   */
+  var SNOOZE_DAYS = 7;     /* after "skip" or "×", stay gone this long         */
+
   var ov=document.getElementById('ppnOverlay');
-  if(!ov||sessionStorage.getItem('ppnPopShown'))return;
-  var fired=false;
+  if(!ov)return;
+  try{
+    if(sessionStorage.getItem('ppnPopShown'))return;
+    var until=localStorage.getItem('ppnPopSnooze');
+    if(until&&Date.now()<Number(until))return;
+  }catch(e){}
+
+  var engaged=0,idle=0,last=Date.now(),fired=false,tick=null;
+
   function setCode(){
-    var driveEnd=new Date('2026-08-11T00:00:00-04:00');
+    var driveEnd=new Date('2026-08-11T00:00:00-05:00');
     var el=document.getElementById('popCode');
     if(Date.now()<driveEnd.getTime()){el.innerHTML='⚡ Launch week: one-time extra 20% — code <b>DRIVETIME20</b>';}
     else{el.innerHTML='Code <b>PATRIOT10X</b> — 10% off, for life · 30-day free trial';}
   }
+  function ready(){
+    if(fired||engaged<MIN_DWELL)return false;
+    /* never stack on top of the partner detail dialog */
+    var pm=document.getElementById('pmodal');
+    return !(pm&&pm.classList.contains('open'));
+  }
   function fire(){
-    if(fired)return;fired=true;
-    sessionStorage.setItem('ppnPopShown','1');
+    if(!ready())return;
+    fired=true; if(tick)clearInterval(tick);
+    try{sessionStorage.setItem('ppnPopShown','1');}catch(e){}
     setCode();ov.hidden=false;
     requestAnimationFrame(function(){ov.classList.add('open');});
   }
-  function close(){ov.classList.remove('open');ov.hidden=true;}
+  function close(snooze){
+    ov.classList.remove('open');ov.hidden=true;
+    if(snooze===true){
+      try{localStorage.setItem('ppnPopSnooze',String(Date.now()+SNOOZE_DAYS*864e5));}catch(e){}
+    }
+  }
+
+  /* Engaged-time clock: a tab sitting in the background earns no credit. */
+  tick=setInterval(function(){
+    var now=Date.now(),d=now-last;last=now;
+    if(document.hidden)return;
+    engaged+=d;idle+=d;
+    if(idle>=IDLE_AFTER||engaged>=MAX_DWELL)fire();
+  },1000);
+
+  function active(){idle=0;}
+  ['pointerdown','pointermove','keydown','touchstart','wheel'].forEach(function(ev){
+    window.addEventListener(ev,active,{passive:true});
+  });
   window.addEventListener('scroll',function(){
+    active();
     var h=document.documentElement;
-    if((window.scrollY+window.innerHeight)/h.scrollHeight>0.6)fire();
+    if(h.scrollHeight>window.innerHeight*1.5&&
+       (window.scrollY+window.innerHeight)/h.scrollHeight>SCROLL_AT)fire();
   },{passive:true});
-  document.addEventListener('mouseout',function(e){if(!e.relatedTarget&&e.clientY<8)fire();});
-  document.getElementById('popX').addEventListener('click',close);
-  document.getElementById('popDismiss').addEventListener('click',close);
-  ov.addEventListener('click',function(e){if(e.target===ov)close();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  /* Exit intent — desktop only, and only once past the floor. */
+  document.addEventListener('mouseout',function(e){
+    if(!e.relatedTarget&&e.clientY<=0)fire();
+  });
+
+  document.getElementById('popX').addEventListener('click',function(){close(true);});
+  document.getElementById('popDismiss').addEventListener('click',function(){close(true);});
+  ov.addEventListener('click',function(e){if(e.target===ov)close(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!ov.hidden)close(false);});
 })();
 </script>
 
