@@ -580,7 +580,7 @@ a.pop-invite:hover{color:#F2E9D5}
 .final-more{display:inline-block;margin-top:16px;font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--bone-dim);text-decoration:underline;text-underline-offset:3px}
 .final-more:hover{color:var(--parchment)}
 
-/* Second-tier CTA: the "tell me more" path that leads to the Underground tour
+/* Second-tier CTA: the "tell me more" path that leads to the Patriotchute tour
    instead of straight to checkout. Sits under every primary buy button. */
 .cta-more{display:inline-block;margin-top:14px;font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--bone-dim);text-decoration:underline;text-underline-offset:3px}
 .cta-more:hover{color:var(--parchment)}

@@ -46,6 +46,7 @@
     </div>
     <ul class="nav-links">
       <li><a href="./index.html">Home</a></li>
+      <li><a href="./join.html">Patriotchute</a></li>
       <li><a href="./partners.html">Partners</a></li>
       <li><a href="./donate.html">Donate</a></li>
       <li><a href="#team">Team</a></li>
@@ -545,18 +546,18 @@
 })();
 
 /* "We interrupt this feed" popup.
-   Timing is deliberate: this is a long editorial page with a live stream on it,
-   so an early interrupt costs us the viewer. Nothing may fire for the first
+   Timing is deliberate: this is a long editorial page carrying a live stream,
+   so an early interrupt costs us the viewer. Nothing fires for the first
    MIN_DWELL of ENGAGED time (time with the tab actually visible). After that
    the popup waits for a real signal — the reader going idle, reading past
    SCROLL_AT, or heading for the exit — with MAX_DWELL as a backstop.
-   Once per visit; a deliberate dismissal snoozes it for a week. */
+   Once per visit; a deliberate dismissal snoozes it for 24 hours. */
 (function(){
   var MIN_DWELL  = 30000;  /* hard floor — no popup before 30s of engaged time */
   var IDLE_AFTER = 15000;  /* then: 15s with no scroll, move, tap or keypress  */
   var SCROLL_AT  = 0.55;   /* or: 55% of the page read                         */
   var MAX_DWELL  = 75000;  /* or: 75s engaged, as a backstop                   */
-  var SNOOZE_DAYS = 7;     /* after "skip" or "×", stay gone this long         */
+  var SNOOZE_DAYS = 1;     /* after "skip" or "×", stay gone for 24 hours      */
 
   var ov=document.getElementById('ppnOverlay');
   if(!ov)return;
