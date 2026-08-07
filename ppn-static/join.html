@@ -96,8 +96,22 @@
 /* feature cards (what's waiting inside) */
 .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .feat{background:#121215;border:1px solid rgba(201,166,96,.22);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
-.feat-media{position:relative;height:290px;background:#0B2B3A;overflow:hidden}
-.feat-media img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .5s ease}
+.feat-media{position:relative;height:300px;background:#0C0C0E;overflow:hidden}
+/* Faded flag behind the screenshots: navy canton over thirteen stripes, blurred
+   hard and knocked back so it reads as atmosphere, not decoration. */
+.feat-media::before{content:"";position:absolute;inset:-6%;
+  background-image:
+    linear-gradient(#1E2F4D,#1E2F4D),
+    repeating-linear-gradient(179deg,#C8102E 0 7.7%,#EFE6D2 7.7% 15.4%);
+  background-size:40% 50%,100% 100%;
+  background-position:5% 7%,0 0;
+  background-repeat:no-repeat,no-repeat;
+  filter:blur(7px) saturate(1);opacity:.42;transform:rotate(-1.5deg) scale(1.06);
+  pointer-events:none}
+/* scrim keeps the device readable over the flag */
+.feat-media::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 45%,rgba(12,12,14,.18) 0%,rgba(12,12,14,.66) 80%)}
+.feat-media img{position:relative;z-index:2;width:100%;height:100%;object-fit:contain;object-position:center;display:block;padding:14px;filter:drop-shadow(0 14px 26px rgba(0,0,0,.55));transition:transform .5s ease}
 .feat:hover .feat-media img{transform:scale(1.04)}
 @media (prefers-reduced-motion:reduce){.feat-media img{transition:none}.feat:hover .feat-media img{transform:none}}
 .feat-body{padding:24px 26px 28px}
