@@ -1221,6 +1221,9 @@ section { position: relative; }
 }
 @media (max-width: 640px) {
   .nav-inner { padding: 12px 20px; }
+  /* "Join Patriotchute" is a long label — tighten it on phones so it never
+     shoulders the hamburger off the edge of the viewport. */
+  .nav-cta { padding: 9px 12px; font-size: 10px; letter-spacing: 0.08em; }
   .hero { padding: 110px 20px 60px; }
   .hero-headline { font-size: 48px; }
   .price-tiers { flex-direction: column; gap: 12px; }

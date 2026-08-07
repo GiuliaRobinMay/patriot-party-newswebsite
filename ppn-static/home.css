@@ -590,3 +590,11 @@ a.pop-invite:hover{color:#F2E9D5}
 
 /* Readiness Check entry point in the final CTA (replaced the dead subscribe form) */
 .final-check{margin-top:30px}
+
+/* Longer CTA labels ("Join Patriotchute — 30 Days Free") must be allowed to wrap
+   on phones; the nowrap that suited "Count Me In" pushed the page sideways. */
+@media (max-width: 640px) {
+  .join-banner .btn { white-space: normal; }
+  .dt-actions .dt-cta { white-space: normal; text-align: center; }
+  .hero--home .hero-eyebrow { word-break: break-word; }
+}
