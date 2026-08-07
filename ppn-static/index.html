@@ -339,11 +339,13 @@
       I'm In — 30 Days Free <span class="arrow">→</span>
     </a>
     <div><a class="final-more" href="./join.html">Not ready? Explore the Underground first →</a></div>
-    <form class="email-form" onsubmit="event.preventDefault();">
-      <input type="email" placeholder="Enter your email" aria-label="Email">
-      <button type="submit">Subscribe →</button>
-    </form>
-    <p class="email-note">Not ready? Get the weekly <em>Underground Dispatch</em>.</p>
+    <!-- The Subscribe form that stood here was wired to preventDefault() with no
+         handler behind it — every address typed in was silently discarded. It is
+         replaced by the Readiness Check until a real provider is connected. -->
+    <div class="final-check">
+      <a href="./readiness.html" class="btn btn-secondary">Take the 2-Minute Readiness Check <span class="arrow">→</span></a>
+      <p class="email-note">Not ready to join? Find out how prepared you actually are — free, no sign-up, and you keep the checklist.</p>
+    </div>
   </div>
 </section>
 
@@ -372,6 +374,7 @@
       <h4>Navigate</h4>
       <ul>
         <li><a href="./index.html">Home</a></li>
+        <li><a href="./readiness.html">Readiness Check</a></li>
         <li><a href="./partners.html">Partners</a></li>
           <li><a href="./donate.html">Donate</a></li>
         <li><a href="#team">Team</a></li>

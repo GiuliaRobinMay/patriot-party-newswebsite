@@ -587,3 +587,6 @@ a.pop-invite:hover{color:#F2E9D5}
 .cta-more--on-red{color:rgba(255,255,255,.88)}
 .cta-more--on-red:hover{color:#fff}
 .join-banner-cta{display:flex;flex-direction:column;align-items:center;gap:0}
+
+/* Readiness Check entry point in the final CTA (replaced the dead subscribe form) */
+.final-check{margin-top:30px}
