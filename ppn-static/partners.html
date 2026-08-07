@@ -30,6 +30,107 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./style.css">
+<style>
+/* ── Partner coverflow ─────────────────────────────────────────────────────
+   A fanned deck of partner cards. One sits front-and-centre; the rest angle
+   away on both sides. Clicking any card brings it forward. Which one opens
+   in the middle is randomised per visit, so every partner gets the spot. */
+.pcf-section{padding:8px 24px 96px;overflow:hidden}
+.pcf{position:relative;max-width:1180px;margin:0 auto}
+
+.pcf-stage{position:relative;height:430px;perspective:1600px;transform-style:preserve-3d;margin:0 auto;
+  /* cards sit behind the stage plane in 3D, so the stage would swallow every
+     click; let events fall through to the cards, which re-enable themselves */
+  pointer-events:none}
+
+.pcf-card{position:absolute;top:0;left:50%;width:290px;height:380px;margin-left:-145px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+  padding:28px 24px;cursor:pointer;
+  background:linear-gradient(168deg,#1A1A1E 0%,#0D0D0F 100%);
+  border:1px solid rgba(201,166,96,.3);border-radius:10px;
+  box-shadow:0 26px 60px rgba(0,0,0,.62);
+  transition:transform .55s cubic-bezier(.22,.68,.36,1),opacity .45s ease,border-color .3s ease,box-shadow .45s ease;
+  will-change:transform}
+.pcf-card:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+
+/* the logo plate — logos are the point, so give them room and a light bed */
+.pcf-logo{width:100%;flex:1;display:flex;align-items:center;justify-content:center;
+  background:#F4F1E8;border-radius:6px;padding:22px;overflow:hidden}
+.pcf-logo img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.pcf-logo .pcf-fallback{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:22px;
+  line-height:1.05;color:#14141A;text-align:center;letter-spacing:.01em}
+
+.pcf-card-name{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:17px;line-height:1.05;
+  color:var(--parchment);text-align:center;letter-spacing:.02em}
+.pcf-card-cat{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--brass)}
+
+.pcf-card.is-active{border-color:var(--flag-red);box-shadow:0 34px 80px rgba(0,0,0,.72),0 0 0 1px rgba(200,16,46,.5)}
+.pcf-card.is-active .pcf-card-name{color:#fff}
+
+/* arrows */
+.pcf-arrow{position:absolute;top:170px;z-index:60;width:46px;height:46px;border-radius:50%;
+  background:rgba(12,12,14,.86);border:1px solid rgba(201,166,96,.45);color:var(--parchment);
+  font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .2s ease,border-color .2s ease}
+.pcf-arrow:hover{background:var(--flag-red);border-color:var(--flag-red);color:#fff}
+.pcf-arrow:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.pcf-prev{left:4px}
+.pcf-next{right:4px}
+
+/* detail panel under the deck */
+.pcf-detail{max-width:640px;margin:26px auto 0;text-align:center}
+.pcf-detail-cat{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--brass);margin-bottom:10px}
+.pcf-detail-name{font-family:'Anton',sans-serif;text-transform:uppercase;
+  font-size:clamp(24px,3.4vw,38px);line-height:1.02;color:var(--parchment);margin:0 0 12px}
+.pcf-detail-desc{font-family:'Fraunces',serif;font-size:16.5px;line-height:1.55;
+  color:rgba(245,240,230,.8);margin:0 auto 22px;max-width:56ch}
+.pcf-detail-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:stretch}
+
+.pcf-visit{display:inline-flex;align-items:center;gap:9px;font-family:'JetBrains Mono',monospace;
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  background:var(--flag-red);color:#fff;border:1px solid var(--flag-red);border-radius:4px;
+  padding:14px 24px;text-decoration:none;transition:background .2s ease}
+.pcf-visit:hover{background:var(--flag-red-bright)}
+
+.pcf-code{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;
+  font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  background:transparent;color:var(--brass);border:1px dashed rgba(201,166,96,.65);border-radius:4px;
+  padding:14px 20px;cursor:pointer;transition:border-color .2s ease,color .2s ease,background .2s ease}
+.pcf-code:hover{border-color:var(--brass);background:rgba(201,166,96,.08);color:var(--parchment)}
+.pcf-code:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.pcf-code-label{opacity:.7}
+.pcf-code b{color:var(--parchment);font-weight:700;letter-spacing:.16em}
+.pcf-code-copy{font-size:9.5px;opacity:.55;letter-spacing:.18em}
+.pcf-code.copied{border-color:#5BA85B;color:#5BA85B}
+.pcf-code.copied .pcf-code-copy{opacity:1;color:#5BA85B}
+.pcf-code.no-code{cursor:default;border-style:solid}
+
+/* dots */
+.pcf-dots{display:flex;gap:9px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.pcf-dot{width:8px;height:8px;border-radius:50%;background:rgba(201,166,96,.3);border:0;padding:0;cursor:pointer;
+  transition:background .25s ease,transform .25s ease}
+.pcf-dot.on{background:var(--flag-red);transform:scale(1.35)}
+.pcf-dot:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+
+@media (prefers-reduced-motion:reduce){
+  .pcf-card{transition:none}
+}
+@media (max-width:900px){
+  .pcf-stage{height:400px}
+  .pcf-card{width:250px;height:350px;margin-left:-125px}
+  .pcf-arrow{top:155px}
+}
+@media (max-width:560px){
+  .pcf-section{padding:8px 14px 72px}
+  .pcf-stage{height:360px}
+  .pcf-card{width:210px;height:310px;margin-left:-105px;padding:20px 16px;gap:12px}
+  .pcf-logo{padding:14px}
+  .pcf-arrow{top:135px;width:40px;height:40px;font-size:22px}
+  .pcf-detail-actions{flex-direction:column}
+}
+</style>
 </head>
 <body>
 
@@ -65,170 +166,32 @@
     </div>
   </section>
 
-  <!-- SPOTLIGHT -->
-  <section class="partners-page-section">
-    <span class="partners-block-label">◉ Featured Partners</span>
-    <div class="spotlight-wrap">
-      <div class="spotlight-carousel" id="spotlightCarousel">
-        <div class="spotlight-viewport">
-          <div class="spotlight-track">
+  <!-- PARTNER COVERFLOW -->
+  <section class="pcf-section">
+    <span class="partners-block-label">◉ The Brands · Tap any card to bring it forward</span>
 
-        <article class="spotlight-card">
-          <div class="spotlight-media">
-            <img src="./assets/img/recovered/PM_1920x500_ppn_v2-1024x267-1.jpg" alt="Patriot Mobile">
-          </div>
-          <div class="spotlight-body">
-            <div class="spotlight-tag">Wireless</div>
-            <h2 class="spotlight-name">Patriot Mobile</h2>
-            <p class="spotlight-desc">America's only Christian-conservative wireless provider — full nationwide coverage on the major networks, US-based support, and a portion of every bill funding the First Amendment, Second Amendment, sanctity of life, and our veterans and first responders.</p>
-            <div class="spotlight-offer">★ Free activation through this link</div>
-            <a href="https://patriotmobile.com/partners/ppn" target="_blank" rel="noopener sponsored" class="btn btn-primary">Get Patriot Mobile <span class="arrow">→</span></a>
-          </div>
-        </article>
+    <div class="pcf" id="pcf">
+      <div class="pcf-stage" id="pcfStage" role="listbox" aria-label="Partner brands"></div>
 
-        <article class="spotlight-card">
-          <div class="spotlight-media">
-            <img src="./assets/img/ppn-square.png" alt="Patriot Party Nutraceuticals — the PPN Store">
-          </div>
-          <div class="spotlight-body">
-            <div class="spotlight-tag">PPN Store</div>
-            <h2 class="spotlight-name">Patriot Party Nutraceuticals</h2>
-            <p class="spotlight-desc">Our own line of ultra-premium, American-made natural hemp wellness — gummies, tinctures, topicals and more. Every order here goes the furthest toward keeping PPN on the air.</p>
-            <div class="spotlight-offer">★ Use code PPN20 at checkout</div>
-            <a href="./shop.html" class="btn btn-primary">Visit the PPN Store <span class="arrow">→</span></a>
-          </div>
-        </article>
+      <button class="pcf-arrow pcf-prev" id="pcfPrev" aria-label="Previous partner">&lsaquo;</button>
+      <button class="pcf-arrow pcf-next" id="pcfNext" aria-label="Next partner">&rsaquo;</button>
 
-          </div>
+      <!-- detail panel for whichever card is front-most -->
+      <div class="pcf-detail" id="pcfDetail" aria-live="polite">
+        <div class="pcf-detail-cat" id="pcfCat"></div>
+        <h3 class="pcf-detail-name" id="pcfName"></h3>
+        <p class="pcf-detail-desc" id="pcfDesc"></p>
+        <div class="pcf-detail-actions">
+          <a class="pcf-visit" id="pcfVisit" href="#" target="_blank" rel="noopener sponsored">Visit Site <span class="arrow">→</span></a>
+          <button class="pcf-code" id="pcfCode" title="Click to copy">
+            <span class="pcf-code-label">Code</span>
+            <b id="pcfCodeVal"></b>
+            <span class="pcf-code-copy" id="pcfCopied">copy</span>
+          </button>
         </div>
-        <button class="spot-arrow spot-prev" id="spotPrev" aria-label="Previous partner">&lsaquo;</button>
-        <button class="spot-arrow spot-next" id="spotNext" aria-label="Next partner">&rsaquo;</button>
-        <div class="spot-dots" id="spotDots"></div>
-      </div>
-    </div>
-
-    <!-- DIRECTORY -->
-    <span class="partners-block-label">◉ All Partners</span>
-    <div class="partner-dir">
-      <div class="partner-dir-grid">
-
-        <article class="pcard">
-          <div class="pcard-logo"><img src="./assets/img/recovered/thumbnail_DSC06150-300x300.jpg" alt="Hunter's Blend Coffee"></div>
-          <div class="pcard-body">
-            <div class="pcard-tag">Coffee &amp; Food</div>
-            <h2 class="pcard-name">Hunter's Blend Coffee</h2>
-            <p class="pcard-desc">Small-batch, specialty-grade coffee roasted in Ohio — "Faith, Freedom &amp; Specialty Coffee." Proudly American, supporting pro-life, veteran, and conservation causes.</p>
-            <div class="pcard-offer">
-              <span class="pcard-code">CODE: PPN</span>
-              <button type="button" class="copy-code" data-code="PPN">Copy</button>
-              <span class="code-flag" title="Verify this code works and credits PPN before publishing">verify</span>
-            </div>
-            <a href="https://www.huntersblendcoffee.com/ppn" target="_blank" rel="noopener sponsored" class="btn btn-secondary">Shop Coffee <span class="arrow">→</span></a>
-          </div>
-        </article>
-
-        <article class="pcard">
-          <div class="pcard-logo"><div class="pcard-wordmark">SkyComp</div></div>
-          <div class="pcard-body">
-            <div class="pcard-tag">Communications</div>
-            <h2 class="pcard-name">SkyComp</h2>
-            <p class="pcard-desc">Next-generation push-to-talk-over-cellular (PoC) radios and communication gear — instant team connectivity across 4G, 5G, LTE and Wi-Fi, with handheld and mobile units, rentals, and professional comms consulting.</p>
-            <div class="pcard-offer">
-              <span class="pcard-code">CODE: PPN</span>
-              <button type="button" class="copy-code" data-code="PPN">Copy</button>
-              <span class="code-flag" title="Verify this code works and credits PPN before publishing">verify</span>
-            </div>
-            <a href="https://skycomptt.com/" target="_blank" rel="noopener sponsored" class="btn btn-secondary">Shop SkyComp <span class="arrow">→</span></a>
-          </div>
-        </article>
-
-        <article class="pcard">
-          <div class="pcard-logo"><img src="./assets/img/recovered/IMG_8679-1.jpg" alt="The ROOT Brands"></div>
-          <div class="pcard-body">
-            <div class="pcard-tag">Wellness</div>
-            <h2 class="pcard-name">The ROOT Brands</h2>
-            <p class="pcard-desc">Natural cellular-cleanse and wellness supplements — including their flagship Clean Slate — built on the philosophy "Nature In, Synthetics Out."</p>
-            <div class="pcard-offer">
-              <span class="pcard-code">CODE: PPN</span>
-              <button type="button" class="copy-code" data-code="PPN">Copy</button>
-              <span class="code-flag" title="Verify this code works and credits PPN before publishing">verify</span>
-            </div>
-            <a href="https://therootbrands.com/PPN" target="_blank" rel="noopener sponsored" class="btn btn-secondary">Shop ROOT <span class="arrow">→</span></a>
-          </div>
-        </article>
-
-        <article class="pcard">
-          <div class="pcard-logo"><img src="./assets/img/recovered/s-0-14-voOEY73CBN0Dx5F84110qYN2PCEWuAPBylfUQbl9___media_library_original_374_460.webp" alt="Cardio Miracle"></div>
-          <div class="pcard-body">
-            <div class="pcard-tag">Wellness</div>
-            <h2 class="pcard-name">Cardio Miracle</h2>
-            <p class="pcard-desc">A whole-food nitric-oxide supplement with 50+ bioavailable ingredients and a dual-pathway delivery system — supporting circulation, energy, and heart health. 60-day money-back guarantee.</p>
-            <div class="pcard-offer">
-              <span class="pcard-perk">★ Discount applied via link</span>
-            </div>
-            <a href="https://cardiomiracle.com/?ref=zTTBm8_aiaNrR" target="_blank" rel="noopener sponsored" class="btn btn-secondary">Shop Cardio Miracle <span class="arrow">→</span></a>
-          </div>
-        </article>
-
-        <article class="pcard">
-          <div class="pcard-logo"><img src="./assets/img/recovered/shoplt360-newlogo-452x174-1.png" alt="LT360"></div>
-          <div class="pcard-body">
-            <div class="pcard-tag">Wellness</div>
-            <h2 class="pcard-name">LT360</h2>
-            <p class="pcard-desc">Cellular-health supplements for a Healthy, Energy-filled, Active Lifestyle — including their signature Cellular Hydration formula and targeted wellness bundles.</p>
-            <div class="pcard-offer">
-              <span class="pcard-code">CODE: PPN</span>
-              <button type="button" class="copy-code" data-code="PPN">Copy</button>
-              <span class="code-flag" title="Verify this code works and credits PPN before publishing">verify</span>
-            </div>
-            <a href="https://shoplt360.com/" target="_blank" rel="noopener sponsored" class="btn btn-secondary">Shop LT360 <span class="arrow">→</span></a>
-          </div>
-        </article>
-
-        <article class="pcard">
-          <div class="pcard-logo"><div class="pcard-wordmark">Richardson<br>Nutritional<br>Center</div></div>
-          <div class="pcard-body">
-            <div class="pcard-tag">Wellness</div>
-            <h2 class="pcard-name">Richardson Nutritional Center</h2>
-            <p class="pcard-desc">Natural supplements built around B17 and apricot seeds, with 30+ years of research and over 500,000 customers. "Premium B17 supplements &amp; natural health treatments."</p>
-            <div class="pcard-offer">
-              <span class="pcard-code">CODE: PPN</span>
-              <button type="button" class="copy-code" data-code="PPN">Copy</button>
-              <span class="code-flag" title="Verify this code works and credits PPN before publishing">verify</span>
-            </div>
-            <a href="https://rncstore.com/ppn" target="_blank" rel="noopener sponsored" class="btn btn-secondary">Shop RNC <span class="arrow">→</span></a>
-          </div>
-        </article>
-
-        <article class="pcard">
-          <div class="pcard-logo"><div class="pcard-wordmark">Fresh<br>Mouth<br>Club</div></div>
-          <div class="pcard-body">
-            <div class="pcard-tag">Oral Care</div>
-            <h2 class="pcard-name">Fresh Mouth Club</h2>
-            <p class="pcard-desc">"The future of brushing" — sonic electric toothbrushes, toothpaste, floss and UV sanitizers, delivered as easy subscription kits. Innovative, natural, powerful oral care.</p>
-            <div class="pcard-offer">
-              <span class="pcard-perk">★ PPN Partner — link applies offer</span>
-            </div>
-            <a href="https://www.freshmouth.club/?ref=THEPATRIOTPARTYNEWS" target="_blank" rel="noopener sponsored" class="btn btn-secondary">Shop Fresh Mouth <span class="arrow">→</span></a>
-          </div>
-        </article>
-
-        <article class="pcard">
-          <div class="pcard-logo"><div class="pcard-wordmark">Miles<br>Franklin</div></div>
-          <div class="pcard-body">
-            <div class="pcard-tag">Precious Metals</div>
-            <h2 class="pcard-name">Miles Franklin</h2>
-            <p class="pcard-desc">Family-owned gold, silver and platinum dealer since 1989 — A+ BBB rating, $12B+ in sales, and Minnesota state licensing for some of the strictest consumer protections in the industry.</p>
-            <div class="pcard-offer">
-              <span class="pcard-perk">★ Ask for the PPN price list</span>
-            </div>
-            <a href="mailto:info@milesfranklin.com?subject=PPN%20Price%20List%20Request&amp;body=Hi%20Miles%20Franklin%2C%20please%20send%20me%20the%20PPN%20gold%20%26%20silver%20price%20list.%20Thank%20you." class="btn btn-secondary">Email for PPN Price List <span class="arrow">→</span></a>
-          </div>
-        </article>
-
       </div>
 
-      <p class="code-footnote">Note (internal): items marked <span class="code-flag">verify</span> show a "PPN" code on our old site, but we haven't confirmed the code is live or credits PPN. Confirm each with the partner before publishing, then remove this note.</p>
+      <div class="pcf-dots" id="pcfDots"></div>
     </div>
   </section>
 
@@ -323,54 +286,199 @@
   </div>
 </footer>
 
-<script>
-  (function () {
-    document.querySelectorAll('.copy-code').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var code = btn.getAttribute('data-code') || '';
-        var done = function () { var t = btn.textContent; btn.textContent = 'Copied!'; setTimeout(function () { btn.textContent = t; }, 1500); };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(code).then(done).catch(done);
-        } else { done(); }
-      });
-    });
-  })();
-
-  (function () {
-    var root = document.getElementById('spotlightCarousel');
-    if (!root) return;
-    var track = root.querySelector('.spotlight-track');
-    var slides = Array.prototype.slice.call(track.querySelectorAll('.spotlight-card'));
-    var dotsWrap = document.getElementById('spotDots');
-    var i = 0, n = slides.length, timer = null;
-    if (n < 2) {
-      var p = document.getElementById('spotPrev'); var nx = document.getElementById('spotNext');
-      if (p) p.style.display = 'none'; if (nx) nx.style.display = 'none';
-      return;
-    }
-    slides.forEach(function (s, idx) {
-      var d = document.createElement('button');
-      d.className = 'spot-dot' + (idx === 0 ? ' active' : '');
-      d.setAttribute('aria-label', 'Go to featured partner ' + (idx + 1));
-      d.addEventListener('click', function () { go(idx); reset(); });
-      dotsWrap.appendChild(d);
-    });
-    var dots = Array.prototype.slice.call(dotsWrap.children);
-    function go(idx) {
-      i = (idx + n) % n;
-      track.style.transform = 'translateX(' + (-i * 100) + '%)';
-      dots.forEach(function (d, k) { d.classList.toggle('active', k === i); });
-    }
-    function start() { timer = setInterval(function () { go(i + 1); }, 6000); }
-    function reset() { if (timer) { clearInterval(timer); start(); } }
-    document.getElementById('spotPrev').addEventListener('click', function () { go(i - 1); reset(); });
-    document.getElementById('spotNext').addEventListener('click', function () { go(i + 1); reset(); });
-    root.addEventListener('mouseenter', function () { if (timer) { clearInterval(timer); timer = null; } });
-    root.addEventListener('mouseleave', function () { if (!timer) start(); });
-    start();
-  })();
-</script>
 <script src="./assets/js/main.js"></script>
+<script>
+/* ── Partner coverflow ─────────────────────────────────────────────────────
+   Cards fan out in 3D around whichever one is active. Click a card (or an
+   arrow, dot, or arrow key) to bring it to the front. The opening card is
+   random on each visit so no partner permanently owns the middle slot. */
+(function () {
+  var PARTNERS = [
+    { n: "Hunter's Blend Coffee", cat: "Coffee & Food",
+      d: "Small-batch specialty coffee roasted in Ohio — faith, freedom and specialty coffee, supporting pro-life, veteran and conservation causes.",
+      code: "PPN", u: "https://www.huntersblendcoffee.com/ppn",
+      img: "https://huntersblendcoffee.com/cdn/shop/files/DSC06197_b0ab2964-bd04-4c2d-8d1f-663e9ef4073a.jpg?width=600" },
 
+    { n: "Patriot Mobile", cat: "Communications",
+      d: "America's Christian conservative wireless carrier — nationwide coverage on the major networks, funding the causes patriots believe in.",
+      code: "PPN — free activation", u: "https://patriotmobile.com/partners/ppn",
+      img: "./assets/img/recovered/PM_1920x500_ppn_v2-1024x267-1.jpg" },
+
+    { n: "Skycom PTT", cat: "Communications",
+      d: "Push-to-talk-over-cellular radios and comms gear — instant team connectivity across 4G, 5G, LTE and Wi-Fi, with rentals and pro consulting.",
+      code: "PPN", u: "https://skycomptt.com/",
+      img: "https://skycomptt.com/wp-content/uploads/2026/05/5365915d-889d-4dba-8a12-236d23de2064-300x300.png" },
+
+    { n: "The ROOT Brands", cat: "Wellness",
+      d: "Natural cellular-cleanse and wellness supplements, including flagship Clean Slate. Nature in, synthetics out.",
+      code: "PPN", u: "https://therootbrands.com/PPN",
+      img: "https://therootbrands.com/cdn/shop/files/Root-Logo-White_White-280x280.png" },
+
+    { n: "Cardio Miracle", cat: "Wellness",
+      d: "Whole-food nitric-oxide supplement with 50+ bioavailable ingredients — circulation, energy and heart health, with a 60-day guarantee.",
+      code: "", u: "https://cardiomiracle.com/?ref=zTTBm8_aiaNrR",
+      note: "Discount applied through the link",
+      img: "https://cardiomiracle.com/cdn/shop/files/cardio_logo.png" },
+
+    { n: "LT360", cat: "Wellness",
+      d: "Cellular-health supplements for an energy-filled, active lifestyle — HEAL: Healthy Energy Active Lifestyle.",
+      code: "PPN", u: "https://shoplt360.com/",
+      img: "https://shoplt360.com/wp-content/uploads/2023/07/Heal-Logo.png" },
+
+    { n: "Richardson Nutritional Center", cat: "Wellness",
+      d: "Natural supplements built around B17 and apricot seeds — thirty years of research and over half a million customers.",
+      code: "PPN", u: "https://rncstore.com/ppn",
+      img: "https://rncstore.com/cdn/shop/files/RNCLOGO1200X630_c7c082e7-fac6-4aa2-9347-b93b9e2a90fc_1200x1200.jpg" },
+
+    { n: "Fresh Mouth Club", cat: "Health",
+      d: "The future of brushing — sonic toothbrushes, toothpaste, floss and UV sanitizers in simple subscription kits.",
+      code: "", u: "https://www.freshmouth.club/?ref=THEPATRIOTPARTYNEWS",
+      note: "Partner pricing through the link",
+      img: "https://www.freshmouth.club/cdn/shop/files/fmc_logo_1.png" },
+
+    { n: "Miles Franklin", cat: "Precious Metals",
+      d: "Family-owned gold and silver dealer since 1989 — A+ BBB rating, twelve billion in sales, strict consumer protections.",
+      code: "", u: "mailto:info@milesfranklin.com?subject=PPN%20Price%20List%20Request",
+      note: "Email for the PPN price list",
+      img: "" }
+  ];
+
+  var stage = document.getElementById('pcfStage');
+  var dots  = document.getElementById('pcfDots');
+  if (!stage) return;
+
+  var active = Math.floor(Math.random() * PARTNERS.length);  /* different every visit */
+  var cards = [];
+
+  PARTNERS.forEach(function (p, i) {
+    var card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'pcf-card';
+    card.setAttribute('role', 'option');
+    card.setAttribute('aria-label', p.n + ' — ' + p.cat);
+
+    var plate = document.createElement('div');
+    plate.className = 'pcf-logo';
+    if (p.img) {
+      var img = document.createElement('img');
+      img.src = p.img; img.alt = p.n + ' logo'; img.loading = 'lazy';
+      /* a partner CDN going down shouldn't leave an empty card */
+      img.onerror = function () {
+        plate.innerHTML = '<span class="pcf-fallback">' + p.n + '</span>';
+      };
+      plate.appendChild(img);
+    } else {
+      plate.innerHTML = '<span class="pcf-fallback">' + p.n + '</span>';
+    }
+
+    var name = document.createElement('div');
+    name.className = 'pcf-card-name'; name.textContent = p.n;
+    var cat = document.createElement('div');
+    cat.className = 'pcf-card-cat'; cat.textContent = p.cat;
+
+    card.appendChild(plate); card.appendChild(name); card.appendChild(cat);
+    card.addEventListener('click', function () { go(i); });
+    stage.appendChild(card);
+    cards.push(card);
+
+    var dot = document.createElement('button');
+    dot.type = 'button'; dot.className = 'pcf-dot';
+    dot.setAttribute('aria-label', 'Show ' + p.n);
+    dot.addEventListener('click', function () { go(i); });
+    dots.appendChild(dot);
+  });
+
+  var codeBtn = document.getElementById('pcfCode');
+  var codeVal = document.getElementById('pcfCodeVal');
+  var copied  = document.getElementById('pcfCopied');
+
+  var SPREAD = 150;
+  function measure() {
+    var w = window.innerWidth;
+    SPREAD = w < 560 ? 96 : (w < 900 ? 122 : 150);
+  }
+
+  function layout() {
+    measure();
+    cards.forEach(function (card, i) {
+      /* circular offset: the deck wraps, so the card after the last one
+         fans in from the right rather than flying off to the left */
+      var n = cards.length;
+      var off = i - active;
+      if (off > n / 2) off -= n;
+      if (off < -n / 2) off += n;
+      var abs = Math.abs(off);
+      var visible = abs <= 3;
+      /* spacing tightens as cards recede, which is what sells the depth */
+      var x = off * (abs === 0 ? 0 : 1) * (SPREAD + Math.max(0, 3 - abs) * (SPREAD * 0.17));
+      var rot = off === 0 ? 0 : (off > 0 ? -42 : 42);
+      var scale = 1 - abs * 0.09;
+      var z = -abs * 130;
+      card.style.transform = 'translateX(' + x + 'px) translateZ(' + z + 'px) rotateY(' + rot + 'deg) scale(' + scale + ')';
+      card.style.opacity = visible ? (1 - abs * 0.16) : 0;
+      card.style.zIndex = String(50 - abs);
+      card.style.pointerEvents = visible ? 'auto' : 'none';
+      card.setAttribute('aria-selected', off === 0 ? 'true' : 'false');
+      card.tabIndex = visible ? 0 : -1;
+      card.classList.toggle('is-active', off === 0);
+    });
+
+    var p = PARTNERS[active];
+    document.getElementById('pcfCat').textContent = p.cat;
+    document.getElementById('pcfName').textContent = p.n;
+    document.getElementById('pcfDesc').textContent = p.d;
+    var visit = document.getElementById('pcfVisit');
+    visit.href = p.u;
+    visit.textContent = p.u.indexOf('mailto:') === 0 ? 'Email for Pricing ' : 'Visit Site ';
+    visit.insertAdjacentHTML('beforeend', '<span class="arrow">→</span>');
+
+    codeBtn.classList.remove('copied');
+    if (p.code) {
+      codeBtn.classList.remove('no-code');
+      codeBtn.disabled = false;
+      codeBtn.querySelector('.pcf-code-label').textContent = 'Code';
+      codeVal.textContent = p.code;
+      copied.textContent = 'copy';
+    } else {
+      codeBtn.classList.add('no-code');
+      codeBtn.disabled = true;
+      codeBtn.querySelector('.pcf-code-label').textContent = '★';
+      codeVal.textContent = p.note || 'No code needed';
+      copied.textContent = '';
+    }
+
+    [].forEach.call(dots.children, function (d, i) { d.classList.toggle('on', i === active); });
+  }
+
+  function go(i) {
+    active = (i + PARTNERS.length) % PARTNERS.length;
+    layout();
+  }
+
+  document.getElementById('pcfPrev').addEventListener('click', function () { go(active - 1); });
+  document.getElementById('pcfNext').addEventListener('click', function () { go(active + 1); });
+
+  document.getElementById('pcf').addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { go(active - 1); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { go(active + 1); e.preventDefault(); }
+  });
+
+  codeBtn.addEventListener('click', function () {
+    var p = PARTNERS[active];
+    if (!p.code) return;
+    var done = function () {
+      codeBtn.classList.add('copied');
+      copied.textContent = 'copied';
+      setTimeout(function () { codeBtn.classList.remove('copied'); copied.textContent = 'copy'; }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(p.code).then(done, function () {});
+    }
+  });
+
+  window.addEventListener('resize', layout);
+  layout();
+})();
+</script>
 </body>
 </html>
