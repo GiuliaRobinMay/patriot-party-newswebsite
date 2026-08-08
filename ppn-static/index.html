@@ -31,6 +31,82 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./style.css">
 <link rel="stylesheet" href="./home.css">
+<style>
+/* ── Readiness Check section (homepage) ───────────────────────────────────
+   Asks question one right here. Answering banks the score and carries the
+   visitor into the full check, so nobody has to decide to "start" anything.
+   .rdy-bg is a CSS stand-in for the eventual background film — swapping in a
+   <video class="rdy-video"> later needs no other change. */
+.rdy{position:relative;padding:96px 32px 104px;overflow:hidden;
+  border-top:1px solid rgba(201,166,96,.2);border-bottom:1px solid rgba(201,166,96,.2);
+  background:#0A0A0C}
+.rdy-video,.rdy-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.rdy-bg{
+  background:
+    radial-gradient(ellipse at 22% 18%, rgba(201,166,96,.16) 0%, transparent 58%),
+    radial-gradient(ellipse at 82% 82%, rgba(200,16,46,.14) 0%, transparent 60%),
+    repeating-linear-gradient(179deg, rgba(200,16,46,.05) 0 7.7%, rgba(239,230,210,.04) 7.7% 15.4%),
+    linear-gradient(180deg,#101013 0%,#0A0A0C 100%);
+  filter:blur(1px)}
+.rdy-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 50%, rgba(10,10,12,.25) 0%, rgba(10,10,12,.86) 88%)}
+
+.rdy-inner{position:relative;z-index:2;max-width:1180px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+
+.rdy-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--brass);margin-bottom:18px}
+.rdy-headline{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(34px,4.6vw,60px);line-height:.98;color:var(--parchment);margin:0 0 18px;text-wrap:balance}
+.rdy-headline .red{color:var(--flag-red-bright)}
+.rdy-sub{font-family:'Fraunces',serif;font-size:clamp(16px,1.9vw,19px);line-height:1.55;
+  color:rgba(245,240,230,.8);max-width:52ch;margin:0 0 32px}
+
+.rdy-dial{position:relative;width:132px;height:132px}
+.rdy-dial svg{transform:rotate(-90deg)}
+#rdyRing{transition:stroke-dashoffset 1.1s cubic-bezier(.2,.7,.3,1),stroke .5s ease}
+.rdy-dial-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.rdy-dial-num b{font-family:'Anton',sans-serif;font-size:34px;line-height:1;color:var(--parchment)}
+.rdy-dial-num span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--bone-dim);margin-top:3px}
+.rdy-dial-note{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--bone-dim);margin:14px 0 0}
+
+.rdy-card{background:linear-gradient(165deg,#17171A,#0D0D0F);border:1px solid rgba(201,166,96,.3);
+  border-radius:10px;padding:30px 28px 26px;box-shadow:0 30px 70px rgba(0,0,0,.6)}
+.rdy-card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.rdy-step{color:var(--bone-dim)}
+.rdy-cat{color:var(--brass)}
+.rdy-q{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(20px,2.5vw,27px);line-height:1.1;color:var(--parchment);margin:0 0 22px;text-wrap:balance}
+.rdy-opts{display:flex;flex-direction:column;gap:10px}
+.rdy-opt{display:block;width:100%;text-align:left;font-family:'Fraunces',serif;font-size:16px;
+  line-height:1.45;color:var(--bone);background:#141417;border:1px solid rgba(201,166,96,.22);
+  border-radius:6px;padding:15px 17px;cursor:pointer;
+  transition:border-color .18s ease,background .18s ease,transform .18s ease}
+.rdy-opt:hover{border-color:var(--flag-red);background:#191a1e;transform:translateX(3px)}
+.rdy-opt:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.rdy-opt.chosen{border-color:var(--flag-red);background:#1d1418}
+.rdy-foot{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--bone-dim);margin:18px 0 0;text-align:center}
+
+@media (prefers-reduced-motion:reduce){
+  #rdyRing{transition:none}
+  .rdy-opt{transition:none}
+  .rdy-opt:hover{transform:none}
+}
+@media (max-width:900px){
+  .rdy{padding:72px 22px 80px}
+  .rdy-inner{grid-template-columns:1fr;gap:36px}
+  .rdy-dial{margin:0 auto}
+  .rdy-dial-note{text-align:center}
+  .rdy-left{text-align:center}
+  .rdy-sub{margin-left:auto;margin-right:auto}
+}
+@media (max-width:560px){
+  .rdy-card{padding:22px 18px 20px}
+}
+</style>
 </head>
 <body>
 
@@ -199,93 +275,10 @@
   </div>
 </section>
 
-<!-- THE PLAN -->
-<section class="plan" id="watch">
-  <div class="container">
-    <span class="section-label">01 · The Plan</span>
-    <h2 class="section-heading">The broadcast is the door.<br>Walk through it.</h2>
-    <div class="plan-grid">
-      <div class="plan-step">
-        <span class="plan-step-num">01</span>
-        <h3 class="plan-step-title">You're Watching the Trailer</h3>
-        <p class="plan-step-desc">The live show is the part we're allowed to put online. Free, uncensored — and only half the story.</p>
-      </div>
-      <div class="plan-step">
-        <span class="plan-step-num">02</span>
-        <h3 class="plan-step-title">Start Your Free Trial</h3>
-        <p class="plan-step-desc">Thirty days inside Patriotchute, risk-free. 10% off locked in with PATRIOT10X. Cancel anytime — most don't.</p>
-      </div>
-      <div class="plan-step">
-        <span class="plan-step-num">03</span>
-        <h3 class="plan-step-title">Walk Through the Door</h3>
-        <p class="plan-step-desc">State rooms, Coffee with Chas at 9am, 24/7 voice, and thousands of patriots who already get it. That's where the real conversation lives.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- JOIN / PERKS -->
-<section class="join" id="join">
-  <div class="container">
-    <div class="join-inner">
-      <div>
-        <span class="section-label">02 · The Network</span>
-        <h2 class="section-heading">Why patriots join Patriotchute.</h2>
-        <ul class="perks-list">
-          <li>
-            <span class="perk-num">01.</span>
-            <span class="perk-text"><strong>State-level groups.</strong> Connect with likeminded patriots in your backyard, on a grassroots level.</span>
-          </li>
-          <li>
-            <span class="perk-num">02.</span>
-            <span class="perk-text"><strong>24/7 voice chat.</strong> State Talk and Talk Time — censorship-free conversations, real-time, any topic, any hour.</span>
-          </li>
-          <li>
-            <span class="perk-num">03.</span>
-            <span class="perk-text"><strong>Coffee with Chas.</strong> Mornings in the community only. Real news, real talk, before the day begins.</span>
-          </li>
-          <li>
-            <span class="perk-num">04.</span>
-            <span class="perk-text"><strong>Weekly giveaways.</strong> Thousands of dollars' worth of patriot-approved products, every week.</span>
-          </li>
-          <li>
-            <span class="perk-num">05.</span>
-            <span class="perk-text"><strong>Direct access.</strong> To the team, the hosts, and the members who make this place what it is.</span>
-          </li>
-        </ul>
-      </div>
-
-      <aside class="price-card">
-        <div class="price-stamp">◉ Membership</div>
-        <h3 class="price-headline">All-inclusive.<br>One roof.</h3>
-        <div class="price-tiers">
-          <div class="price-tier">
-            <div class="amount">$12.99</div>
-            <div class="unit">Per Month</div>
-          </div>
-          <div class="price-tier">
-            <div class="amount">$99</div>
-            <div class="unit">Per Year · Save 36%</div>
-          </div>
-        </div>
-        <p class="price-free"><strong>30 days free.</strong> <span>Cancel anytime.</span></p>
-        <div class="price-promo">
-          <span class="price-promo-label">10% off — use code</span>
-          <span class="price-promo-code">PATRIOT10X</span>
-        </div>
-        <a href="https://www.patriotchute.com/users/onboarding/choose_plan?plan_id=2267386&amp;bundle_token=8a2bad0893042bd83ecd59267a9b1d16&amp;prefer_signup=true&amp;utm_source=manual" class="btn btn-primary">
-          Join Patriotchute — 30 Days Free <span class="arrow">→</span>
-        </a>
-        <a class="cta-more" href="./join.html#pricing">Compare what's included →</a>
-      </aside>
-    </div>
-  </div>
-</section>
-
 <!-- TEAM -->
 <section class="team" id="team">
   <div class="container">
-    <span class="section-label">03 · The On-Air Team</span>
+    <span class="section-label">01 · The On-Air Team</span>
     <h2 class="section-heading">The voices behind the broadcast.</h2>
     <div class="team-grid">
       <div class="team-card">
@@ -309,7 +302,7 @@
 <!-- TESTIMONIALS -->
 <section class="testimonials">
   <div class="container">
-    <span class="section-label">04 · From the Members</span>
+    <span class="section-label">02 · From the Members</span>
     <h2 class="section-heading">Real patriots.<br>Real words.</h2>
     <div class="test-grid">
       <div class="test-card">
@@ -320,6 +313,52 @@
       </div>
       <div class="test-card">
         <p class="test-quote">I tried every other patriot community. PPN is the only one that feels real. Real people, real talk, no grift.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- READINESS CHECK — inline first question; answering carries you into the full check -->
+<section class="rdy" id="readiness">
+  <!-- Drop a loop in here later and it plays behind everything, like the hero:
+       <video class="rdy-video" autoplay muted loop playsinline poster="..." src="..."></video> -->
+  <div class="rdy-bg" aria-hidden="true"></div>
+  <div class="rdy-scrim" aria-hidden="true"></div>
+
+  <div class="rdy-inner">
+    <div class="rdy-left">
+      <div class="rdy-eyebrow">◉ Free // 2 Minutes // No Sign-Up</div>
+      <h2 class="rdy-headline">How ready are you, <span class="red">really?</span></h2>
+      <p class="rdy-sub">
+        Ten honest questions — water, power, comms, food, and the one nearly every patriot
+        scores zero on. You get a straight score, your weak spots, and the checklist to close them.
+      </p>
+
+      <div class="rdy-dial" aria-hidden="true">
+        <svg viewBox="0 0 132 132" width="132" height="132">
+          <circle cx="66" cy="66" r="58" fill="none" stroke="rgba(201,166,96,.18)" stroke-width="9"></circle>
+          <circle id="rdyRing" cx="66" cy="66" r="58" fill="none" stroke="#C8102E" stroke-width="9"
+                  stroke-linecap="round" stroke-dasharray="364.4" stroke-dashoffset="364.4"></circle>
+        </svg>
+        <div class="rdy-dial-num"><b id="rdyNum">—</b><span>out of 100</span></div>
+      </div>
+      <p class="rdy-dial-note">Most patriots score under 40 on their first run.</p>
+    </div>
+
+    <div class="rdy-right">
+      <div class="rdy-card">
+        <div class="rdy-card-head">
+          <span class="rdy-step">Question 01 of 10</span>
+          <span class="rdy-cat">Water</span>
+        </div>
+        <h3 class="rdy-q">If the taps stopped tonight, how long could your household drink?</h3>
+        <div class="rdy-opts" id="rdyOpts">
+          <button type="button" class="rdy-opt" data-score="0">Not a drop stored</button>
+          <button type="button" class="rdy-opt" data-score="3">A day or two</button>
+          <button type="button" class="rdy-opt" data-score="7">About a week</button>
+          <button type="button" class="rdy-opt" data-score="10">Two weeks or more, plus a filter</button>
+        </div>
+        <p class="rdy-foot" id="rdyFoot">Pick one — the next nine take about two minutes.</p>
       </div>
     </div>
   </div>
@@ -342,10 +381,7 @@
     <!-- The Subscribe form that stood here was wired to preventDefault() with no
          handler behind it — every address typed in was silently discarded. It is
          replaced by the Readiness Check until a real provider is connected. -->
-    <div class="final-check">
-      <a href="./readiness.html" class="btn btn-secondary">Take the 2-Minute Readiness Check <span class="arrow">→</span></a>
-      <p class="email-note">Not ready to join? Find out how prepared you actually are — free, no sign-up, and you keep the checklist.</p>
-    </div>
+    <p class="email-note">Not ready to join? Take the Readiness Check above — free, no sign-up, and you keep the checklist.</p>
   </div>
 </section>
 
@@ -628,5 +664,36 @@
 })();
 </script>
 
+<script>
+/* Readiness Check: answering question one here banks the score and hands off
+   to the full check, which resumes at question two. */
+(function(){
+  var opts = document.getElementById('rdyOpts');
+  if (!opts) return;
+  var ring = document.getElementById('rdyRing');
+  var num  = document.getElementById('rdyNum');
+  var foot = document.getElementById('rdyFoot');
+  var C = 364.4, busy = false;
+
+  opts.addEventListener('click', function (e) {
+    var btn = e.target.closest('.rdy-opt');
+    if (!btn || busy) return;
+    busy = true;
+    var score = Number(btn.getAttribute('data-score'));
+    btn.classList.add('chosen');
+
+    /* show that one answer as a slice of 100, then carry it over */
+    var shown = score * 10;
+    num.textContent = shown;
+    ring.style.strokeDashoffset = String(C - (C * shown / 100));
+    ring.setAttribute('stroke', shown >= 70 ? '#5BA85B' : shown >= 40 ? '#C9A660' : '#C8102E');
+    foot.textContent = 'Nine to go — taking you there…';
+
+    var go = function () { window.location.href = './readiness.html?q1=' + score; };
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) go();
+    else setTimeout(go, 900);
+  });
+})();
+</script>
 </body>
 </html>

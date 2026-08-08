@@ -409,6 +409,22 @@ var BEEHIIV_EMBED_URL = "";
     quiz.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 
+  /* Arriving from the homepage question: bank that answer and resume at Q2. */
+  (function(){
+    var q1 = new URLSearchParams(location.search).get('q1');
+    if (q1 === null) return;
+    var score = Number(q1);
+    if (!isFinite(score) || score < 0 || score > 10) return;
+    answers[0] = score;
+    i = 1;
+    started = true;
+    quiz.hidden = false;
+    render();
+    requestAnimationFrame(function(){
+      quiz.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  })();
+
   el('rcBack').addEventListener('click', function(){
     if (i > 0) { i--; render(); }
   });
