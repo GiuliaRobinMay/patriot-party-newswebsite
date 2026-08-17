@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Join Patriotchute — The Community Where the Patriots Actually Are · Patriot Party News</title>
-<meta name="description" content="Patriotchute is the members-only community behind Patriot Party News — 50 state rooms, live voice around the clock, Coffee with Chas every morning, Patriot Drive Time every weekday. 30 days free, cancel anytime.">
+<meta name="description" content="Patriotchute is the members-only community behind Patriot Party News — 50 state rooms, live voice around the clock, Coffee with Chas every weekday morning. 30 days free, cancel anytime.">
 <link rel="canonical" href="https://thepatriotpartynews.com/join.html">
 <link rel="icon" href="./assets/img/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="./assets/img/ppn-site-icon-512.png" sizes="512x512">
@@ -170,7 +170,6 @@
       <li><a href="./join.html">Patriotchute</a></li>
       <li><a href="./partners.html">Partners</a></li>
       <li><a href="./donate.html">Donate</a></li>
-      <li><a href="#team">Team</a></li>
       <li><a href="./contact.html">Contact</a></li>
     </ul>
     <a href="https://www.patriotchute.com/users/onboarding/choose_plan?plan_id=2267386&amp;bundle_token=8a2bad0893042bd83ecd59267a9b1d16&amp;prefer_signup=true&amp;utm_source=manual" class="nav-cta">Join Patriotchute →</a>
@@ -204,7 +203,7 @@
       </div>
     </div>
   </div>
-  <div class="jstats"><span>◉ On air since <b>2021</b></span><span><b>50</b> state rooms</span><span><b>2,000+</b> patriots inside</span><span>Coffee w/ Chas <b>9AM CT</b></span><span>Drive Time <b>3PM CT</b></span></div>
+  <div class="jstats"><span>◉ On air since <b>2021</b></span><span><b>50</b> state rooms</span><span><b>2,000+</b> patriots inside</span><span>Coffee w/ Chas <b>9AM CT</b></span></div>
 </section>
 
 <!-- DAILY LINEUP -->
@@ -222,20 +221,11 @@
       </div>
     </div>
 
-    <div class="show">
-      <div class="show-time"><span class="onair">Weekdays</span><b>3:00 PM</b><span>Central</span></div>
-      <div class="show-body">
-        <h3>🚗 Patriot Drive Time</h3>
-        <p>The drive home, live. Chas on voice, patriots from your state riding along — the afternoon news cycle, taken apart while it's still warm. First ride: Monday, August 10, 3PM Central.</p>
-        <span class="show-chip hot" id="dtChip">⚡ Join before the first ride — one-time extra 20% · DRIVETIME20</span> <span class="show-chip live-chip">🚗 Next ride in <b id="dtCount">—</b></span>
-      </div>
-    </div>
-
     <div class="between">And between the shows — the room never closes</div>
 
       <div class="inside-card"><h4>📡 The uncensored stream</h4><p>An ongoing feed of underground news — raw, ahead of the headlines, the version the platforms won't carry.</p></div>
       <div class="inside-card"><h4>🗺 Specialized rooms</h4><p>Your state's room plus focused channels by topic — find the conversation that's yours.</p></div>
-      <div class="inside-card"><h4>🎙 The PPN talk</h4><p>Exclusive access to Chas, Warren and the team — ask directly, get answers in the room, not in a comment section.</p></div>
+      <div class="inside-card"><h4>🎙 The PPN talk</h4><p>Exclusive access to Chas and the team — ask directly, get answers in the room, not in a comment section.</p></div>
     </div>
   </div>
 </section>
@@ -299,8 +289,8 @@
         <div class="feat-media"><img src="./assets/img/community/image_03.png" alt="The streaming calendar — PPN News and ON TAP with PPN, with members marked as going" loading="lazy"></div>
         <div class="feat-body">
           <span class="feat-pill gold">The Shows</span>
-          <h3>Chas, live, twice a day</h3>
-          <p><strong>Coffee with Chas, 9AM CT</strong> and <strong>Drive Time, weekdays 3PM CT</strong> — members only, chat open, your questions answered while the news is still warm.</p>
+          <h3>Chas, live, every morning</h3>
+          <p><strong>Coffee with Chas, every weekday at 9AM CT</strong> — members only, chat open, your questions answered while the news is still warm.</p>
         </div>
       </article>
 
@@ -417,7 +407,6 @@
         <li><a href="./readiness.html">Readiness Check</a></li>
         <li><a href="./partners.html">Partners</a></li>
           <li><a href="./donate.html">Donate</a></li>
-        <li><a href="#team">Team</a></li>
         <li><a href="./contact.html">Contact</a></li>
       </ul>
     </div>
@@ -449,9 +438,8 @@
 </footer>
 
 <script>
-/* live countdowns: next Coffee with Chas (9AM CT daily), next Drive Time (weekdays 3PM CT; first ride Aug 10) */
+/* live countdown: next Coffee with Chas (9AM CT daily) */
 (function(){
-  var LAUNCH = new Date('2026-08-10T15:00:00-05:00');
   function pad(n){return (n<10?'0':'')+n}
   function fmt(ms){var s=Math.floor(ms/1000);var d=Math.floor(s/86400);var h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),x=s%60;return (d>0?d+'d ':'')+pad(h)+':'+pad(m)+':'+pad(x)}
   function nextDaily(tz,hour){
@@ -460,32 +448,12 @@
     if(now>=t)t.setDate(t.getDate()+1);
     return t-now;
   }
-  function nextDrive(){
-    var real=Date.now();
-    if(real<LAUNCH.getTime())return LAUNCH.getTime()-real;
-    var now=new Date(new Date().toLocaleString('en-US',{timeZone:'America/Chicago'}));
-    var t=new Date(now);t.setHours(15,0,0,0);
-    if(now>=t)t.setDate(t.getDate()+1);
-    while(t.getDay()===0||t.getDay()===6)t.setDate(t.getDate()+1);
-    return t-now;
-  }
   function tick(){
-    var c=document.getElementById('cwcCount'),d=document.getElementById('dtCount');
+    var c=document.getElementById('cwcCount');
     if(c)c.textContent=fmt(nextDaily('America/Chicago',9));
-    if(d)d.textContent=fmt(nextDrive());
     setTimeout(tick,1000);
   }
   tick();
-})();
-(function(){
-  var driveEnd = new Date('2026-08-11T00:00:00-04:00');
-  if (Date.now() >= driveEnd.getTime()) {
-    var chip = document.getElementById('dtChip');
-    if (chip) chip.outerHTML = '<span class="show-chip">Weekdays · members only</span>';
-  } else {
-    var pc = document.getElementById('priceCode');
-    if (pc) pc.innerHTML = '⚡ Launch week: one-time extra 20% — code <b>DRIVETIME20</b> · then <b>PATRIOT10X</b> for 10% off life';
-  }
 })();
 </script>
 </body>

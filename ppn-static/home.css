@@ -598,3 +598,6 @@ a.pop-invite:hover{color:#F2E9D5}
   .dt-actions .dt-cta { white-space: normal; text-align: center; }
   .hero--home .hero-eyebrow { word-break: break-word; }
 }
+
+/* Only one host on air now — keep the single card from stranding in a wide grid. */
+.team-grid--solo{max-width:420px;margin-left:auto;margin-right:auto}
