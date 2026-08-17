@@ -30,33 +30,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./style.css">
-<style>
-/* ── Square partner tiles (top of the partners page) ───────────────────────
-   The partner imagery, big and square, before any of the detail sections.
-   Photos fill their tile; wordmark-style logos sit on a light plate so they
-   are not cropped into nonsense. */
-.pt-section{padding-top:8px}
-.pt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1160px;margin:0 auto}
-.pt-tile{display:flex;flex-direction:column;text-decoration:none;background:#141417;
-  border:1px solid rgba(201,166,96,.26);border-radius:8px;overflow:hidden;
-  transition:border-color .22s ease,transform .22s ease,box-shadow .22s ease}
-.pt-tile:hover{border-color:var(--flag-red);transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.5)}
-.pt-tile:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
-.pt-media{position:relative;aspect-ratio:1/1;overflow:hidden;background:#0C0C0E}
-.pt-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
-.pt-tile:hover .pt-media img{transform:scale(1.05)}
-/* wide wordmarks get a light bed and are shown whole */
-.pt-plate{background:#F4F1E8;display:flex;align-items:center;justify-content:center;padding:26px}
-.pt-plate img{object-fit:contain}
-.pt-info{padding:16px 16px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
-.pt-cat{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass)}
-.pt-name{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:18px;line-height:1.08;color:var(--parchment);margin:0}
-.pt-code{margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--bone-dim)}
-.pt-tile:hover .pt-code{color:var(--parchment)}
-@media (prefers-reduced-motion:reduce){.pt-tile,.pt-media img{transition:none}.pt-tile:hover{transform:none}.pt-tile:hover .pt-media img{transform:none}}
-@media (max-width:960px){.pt-grid{grid-template-columns:repeat(2,1fr);gap:16px}}
-@media (max-width:560px){.pt-grid{gap:12px}.pt-name{font-size:15px}.pt-info{padding:12px 12px 14px}.pt-plate{padding:16px}}
-</style>
+<style>.spotlight-wordmark{font-family:'Anton',sans-serif;font-size:34px;line-height:1.05;text-transform:uppercase;color:#14141A;text-align:center}</style>
 </head>
 <body>
 
@@ -91,58 +65,6 @@
     </div>
   </section>
 
-  <!-- SQUARE PARTNER TILES — the partner imagery, big and up front -->
-  <section class="partners-page-section pt-section">
-    <span class="partners-block-label">◉ The Brands We Stand With</span>
-    <div class="pt-grid">
-
-      <a class="pt-tile" href="https://patriotmobile.com/partners/ppn" target="_blank" rel="noopener sponsored">
-        <div class="pt-media pt-plate">
-          <img src="./assets/img/recovered/PM_1920x500_ppn_v2-1024x267-1.jpg" alt="Patriot Mobile" loading="lazy">
-        </div>
-        <div class="pt-info">
-          <span class="pt-cat">Wireless</span>
-          <h3 class="pt-name">Patriot Mobile</h3>
-          <span class="pt-code">Free activation</span>
-        </div>
-      </a>
-
-      <a class="pt-tile" href="https://www.huntersblendcoffee.com/ppn" target="_blank" rel="noopener sponsored">
-        <div class="pt-media">
-          <img src="./assets/img/recovered/thumbnail_DSC06150-300x300.jpg" alt="Hunter's Blend Coffee" loading="lazy">
-        </div>
-        <div class="pt-info">
-          <span class="pt-cat">Coffee &amp; Food</span>
-          <h3 class="pt-name">Hunter's Blend Coffee</h3>
-          <span class="pt-code">Code PPN</span>
-        </div>
-      </a>
-
-      <a class="pt-tile" href="https://cardiomiracle.com/?ref=zTTBm8_aiaNrR" target="_blank" rel="noopener sponsored">
-        <div class="pt-media">
-          <img src="./assets/img/recovered/s-0-14-voOEY73CBN0Dx5F84110qYN2PCEWuAPBylfUQbl9___media_library_original_374_460.webp" alt="Cardio Miracle" loading="lazy">
-        </div>
-        <div class="pt-info">
-          <span class="pt-cat">Wellness</span>
-          <h3 class="pt-name">Cardio Miracle</h3>
-          <span class="pt-code">Discount via link</span>
-        </div>
-      </a>
-
-      <a class="pt-tile" href="./shop.html">
-        <div class="pt-media">
-          <img src="./assets/img/ppn-square.png" alt="Patriot Party Nutraceuticals" loading="lazy">
-        </div>
-        <div class="pt-info">
-          <span class="pt-cat">PPN Store</span>
-          <h3 class="pt-name">Patriot Party Nutraceuticals</h3>
-          <span class="pt-code">Code PPN20</span>
-        </div>
-      </a>
-
-    </div>
-  </section>
-
   <!-- SPOTLIGHT -->
   <section class="partners-page-section">
     <span class="partners-block-label">◉ Featured Partners</span>
@@ -152,26 +74,77 @@
           <div class="spotlight-track">
 
         <article class="spotlight-card">
-          <div class="spotlight-media">
-            <img src="./assets/img/recovered/PM_1920x500_ppn_v2-1024x267-1.jpg" alt="Patriot Mobile">
-          </div>
+          <div class="spotlight-media"><img src="./assets/img/recovered/PM_1920x500_ppn_v2-1024x267-1.jpg" alt="Patriot Mobile"></div>
           <div class="spotlight-body">
             <div class="spotlight-tag">Wireless</div>
             <h2 class="spotlight-name">Patriot Mobile</h2>
-            <p class="spotlight-desc">America's only Christian-conservative wireless provider — full nationwide coverage on the major networks, US-based support, and a portion of every bill funding the First Amendment, Second Amendment, sanctity of life, and our veterans and first responders.</p>
+            <p class="spotlight-desc">America's only Christian-conservative wireless provider — full nationwide coverage on the major networks, US-based support, and a portion of every bill funding the causes patriots believe in.</p>
             <div class="spotlight-offer">★ Free activation through this link</div>
             <a href="https://patriotmobile.com/partners/ppn" target="_blank" rel="noopener sponsored" class="btn btn-primary">Get Patriot Mobile <span class="arrow">→</span></a>
           </div>
         </article>
 
         <article class="spotlight-card">
-          <div class="spotlight-media">
-            <img src="./assets/img/ppn-square.png" alt="Patriot Party Nutraceuticals — the PPN Store">
+          <div class="spotlight-media"><img src="./assets/img/recovered/thumbnail_DSC06150-300x300.jpg" alt="Hunter's Blend Coffee"></div>
+          <div class="spotlight-body">
+            <div class="spotlight-tag">Coffee &amp; Food</div>
+            <h2 class="spotlight-name">Hunter's Blend Coffee</h2>
+            <p class="spotlight-desc">Small-batch, specialty-grade coffee roasted in Ohio — "Faith, Freedom &amp; Specialty Coffee." Proudly American, supporting pro-life, veteran, and conservation causes.</p>
+            <div class="spotlight-offer">★ Code PPN at checkout</div>
+            <a href="https://www.huntersblendcoffee.com/ppn" target="_blank" rel="noopener sponsored" class="btn btn-primary">Shop Coffee <span class="arrow">→</span></a>
           </div>
+        </article>
+
+        <article class="spotlight-card">
+          <div class="spotlight-media"><img src="https://skycomptt.com/wp-content/uploads/2026/05/5365915d-889d-4dba-8a12-236d23de2064-300x300.png" alt="Skycom PTT"></div>
+          <div class="spotlight-body">
+            <div class="spotlight-tag">Communications</div>
+            <h2 class="spotlight-name">Skycom PTT</h2>
+            <p class="spotlight-desc">Next-generation push-to-talk-over-cellular radios and comms gear — instant team connectivity across 4G, 5G, LTE and Wi-Fi, with rentals and professional consulting.</p>
+            <div class="spotlight-offer">★ Code PPN</div>
+            <a href="https://skycomptt.com/" target="_blank" rel="noopener sponsored" class="btn btn-primary">Shop Skycom <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+        <article class="spotlight-card">
+          <div class="spotlight-media"><img src="./assets/img/recovered/s-0-14-voOEY73CBN0Dx5F84110qYN2PCEWuAPBylfUQbl9___media_library_original_374_460.webp" alt="Cardio Miracle"></div>
+          <div class="spotlight-body">
+            <div class="spotlight-tag">Wellness</div>
+            <h2 class="spotlight-name">Cardio Miracle</h2>
+            <p class="spotlight-desc">A whole-food nitric-oxide supplement with 50+ bioavailable ingredients — supporting circulation, energy, and heart health. 60-day money-back guarantee.</p>
+            <div class="spotlight-offer">★ Discount applied via link</div>
+            <a href="https://cardiomiracle.com/?ref=zTTBm8_aiaNrR" target="_blank" rel="noopener sponsored" class="btn btn-primary">Shop Cardio Miracle <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+        <article class="spotlight-card">
+          <div class="spotlight-media"><img src="https://www.freshmouth.club/cdn/shop/files/fmc_logo_1.png" alt="Fresh Mouth Club"></div>
+          <div class="spotlight-body">
+            <div class="spotlight-tag">Oral Care</div>
+            <h2 class="spotlight-name">Fresh Mouth Club</h2>
+            <p class="spotlight-desc">"The future of brushing" — sonic electric toothbrushes, toothpaste, floss and UV sanitizers, delivered as easy subscription kits.</p>
+            <div class="spotlight-offer">★ PPN Partner — link applies offer</div>
+            <a href="https://www.freshmouth.club/?ref=THEPATRIOTPARTYNEWS" target="_blank" rel="noopener sponsored" class="btn btn-primary">Shop Fresh Mouth <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+        <article class="spotlight-card">
+          <div class="spotlight-media"><div class="spotlight-wordmark">Miles<br>Franklin</div></div>
+          <div class="spotlight-body">
+            <div class="spotlight-tag">Precious Metals</div>
+            <h2 class="spotlight-name">Miles Franklin</h2>
+            <p class="spotlight-desc">Family-owned gold, silver and platinum dealer since 1989 — A+ BBB rating, $12B+ in sales, and some of the strictest consumer protections in the industry.</p>
+            <div class="spotlight-offer">★ Ask for the PPN price list</div>
+            <a href="mailto:info@milesfranklin.com?subject=PPN%20Price%20List%20Request" class="btn btn-primary">Email for the Price List <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+        <article class="spotlight-card">
+          <div class="spotlight-media"><img src="./assets/img/ppn-square.png" alt="Patriot Party Nutraceuticals — the PPN Store"></div>
           <div class="spotlight-body">
             <div class="spotlight-tag">PPN Store</div>
             <h2 class="spotlight-name">Patriot Party Nutraceuticals</h2>
-            <p class="spotlight-desc">Our own line of ultra-premium, American-made natural hemp wellness — gummies, tinctures, topicals and more. Every order here goes the furthest toward keeping PPN on the air.</p>
+            <p class="spotlight-desc">Our own line of ultra-premium, American-made natural hemp wellness — gummies, tinctures, topicals and more. Every order goes the furthest toward keeping PPN on the air.</p>
             <div class="spotlight-offer">★ Use code PPN20 at checkout</div>
             <a href="./shop.html" class="btn btn-primary">Visit the PPN Store <span class="arrow">→</span></a>
           </div>
@@ -189,6 +162,20 @@
     <span class="partners-block-label">◉ All Partners</span>
     <div class="partner-dir">
       <div class="partner-dir-grid">
+
+        <article class="pcard">
+          <div class="pcard-logo"><img src="./assets/img/recovered/PM_1920x500_ppn_v2-1024x267-1.jpg" alt="Patriot Mobile"></div>
+          <div class="pcard-body">
+            <div class="pcard-tag">Wireless</div>
+            <h2 class="pcard-name">Patriot Mobile</h2>
+            <p class="pcard-desc">America's only Christian-conservative wireless provider — nationwide coverage on the major networks, US-based support, and a portion of every bill funding the causes patriots believe in.</p>
+            <div class="pcard-offer">
+              <span class="pcard-perk">★ Free activation through this link</span>
+            </div>
+            <a href="https://patriotmobile.com/partners/ppn" target="_blank" rel="noopener sponsored" class="btn btn-secondary">Get Patriot Mobile <span class="arrow">→</span></a>
+          </div>
+        </article>
+
 
         <article class="pcard">
           <div class="pcard-logo"><img src="./assets/img/recovered/thumbnail_DSC06150-300x300.jpg" alt="Hunter's Blend Coffee"></div>
@@ -256,6 +243,21 @@
               <span class="pcard-perk">★ Ask for the PPN price list</span>
             </div>
             <a href="mailto:info@milesfranklin.com?subject=PPN%20Price%20List%20Request&amp;body=Hi%20Miles%20Franklin%2C%20please%20send%20me%20the%20PPN%20gold%20%26%20silver%20price%20list.%20Thank%20you." class="btn btn-secondary">Email for PPN Price List <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+
+        <article class="pcard">
+          <div class="pcard-logo"><img src="./assets/img/ppn-square.png" alt="Patriot Party Nutraceuticals"></div>
+          <div class="pcard-body">
+            <div class="pcard-tag">PPN Store</div>
+            <h2 class="pcard-name">Patriot Party Nutraceuticals</h2>
+            <p class="pcard-desc">Our own line of ultra-premium, American-made natural hemp wellness — gummies, tinctures, topicals and more. Every order goes the furthest toward keeping PPN on the air.</p>
+            <div class="pcard-offer">
+              <span class="pcard-code">CODE: PPN20</span>
+              <button type="button" class="copy-code" data-code="PPN20">Copy</button>
+            </div>
+            <a href="./shop.html" class="btn btn-secondary">Visit the PPN Store <span class="arrow">→</span></a>
           </div>
         </article>
 
