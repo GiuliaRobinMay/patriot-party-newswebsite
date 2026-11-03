@@ -478,8 +478,8 @@
    {n:"Cardio Miracle",t:"Wellness",d:"Whole-food nitric-oxide supplement with 50+ bioavailable ingredients — circulation, energy and heart health. 60-day guarantee.",code:"★ Discount via link",u:"https://cardiomiracle.com/?ref=zTTBm8_aiaNrR",img:"https://cardiomiracle.com/cdn/shop/files/cardio_logo.png",light:1},
    {n:"Patriot Mobile",t:"Communications",d:"America's Christian conservative wireless carrier — nationwide coverage on major networks, supporting causes patriots believe in.",code:"PPN — Free activation",u:"https://patriotmobile.com/partners/ppn",img:"./assets/img/recovered/PM_1920x500_ppn_v2-1024x267-1.jpg",light:1},
    {n:"Fresh Mouth Club",t:"Health",d:"“The future of brushing” — sonic toothbrushes, toothpaste, floss and UV sanitizers in easy subscription kits.",code:"PPN Partner",u:"https://www.freshmouth.club/?ref=THEPATRIOTPARTYNEWS",img:"https://www.freshmouth.club/cdn/shop/files/fmc_logo_1.png",light:1},
-   {n:"Miles Franklin",t:"Precious Metals",d:"Family-owned gold and silver dealer since 1989 — A+ BBB rating, $12B+ in sales, strict consumer protections.",code:"Email for PPN price list",u:"mailto:info@milesfranklin.com?subject=PPN%20Price%20List%20Request"},
-   {n:"CUE Broadcast",t:"Streaming TV",d:"Member-supported, faith, family and freedom-friendly streaming — 700+ live channels plus on-demand movies and shows, on up to 5 devices, for one honest price. No cable, no contract.",code:"Watch CUE with PPN",u:"https://www.cuebroadcast.com/w/ppn"}
+   {n:"Miles Franklin",t:"Precious Metals",d:"Family-owned gold and silver dealer since 1989 — A+ BBB rating, $12B+ in sales, strict consumer protections.",code:"Email for PPN price list",u:"mailto:info@milesfranklin.com?subject=PPN%20Price%20List%20Request",img:"https://milesfranklin.com/wp-content/uploads/2025/01/2025-MilesFranklin-logo-1024x256.png",light:1},
+   {n:"CUE Broadcast",t:"Streaming TV",d:"Member-supported, faith, family and freedom-friendly streaming — 700+ live channels plus on-demand movies and shows, on up to 5 devices, for one honest price. No cable, no contract.",code:"Watch CUE with PPN",u:"https://www.cuebroadcast.com/w/ppn",img:"https://www.cuebroadcast.com/cue-logo-white.png"}
   ];
   var row=document.getElementById('prow');
   if(!row)return;
@@ -501,7 +501,8 @@
     el.type='button';
     el.className='ptile'+(p.gold?' gold':'')+(p.light?' light':'')+(p.cover?' cover':'');
     el.innerHTML=(p.img?'<img src="'+p.img+'" alt="" loading="lazy">':'<span class="ptile-mark">'+p.n+'</span>')
-      +'<span class="ptile-name">'+p.n+'</span>';
+      +'<span class="ptile-name">'+p.n+'</span>'
+      +'<span class="ptile-chyron">'+p.code+'</span>';
     var im=el.querySelector('img');
     if(im){im.addEventListener('error',function(){var m=document.createElement('span');m.className='ptile-mark';m.textContent=p.n;this.replaceWith(m);});}
     el.addEventListener('click',function(){openModal(p)});
@@ -510,12 +511,24 @@
   document.getElementById('pmodalX').addEventListener('click',closeModal);
   modal.addEventListener('click',function(e){if(e.target===modal)closeModal()});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
-  /* traveling highlight so the row feels alive without moving click targets */
-  var tiles=row.querySelectorAll('.ptile'),wi=0;
-  setInterval(function(){
-    tiles.forEach(function(t){t.classList.remove('wave')});
-    tiles[wi%tiles.length].classList.add('wave');wi++;
-  },900);
+  /* broadcast cycle: one tile at a time goes red with its offer bar */
+  var tiles=row.querySelectorAll('.ptile'),wi=0,cyc=null;
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function stepWall(){
+    tiles.forEach(function(t){t.classList.remove('on')});
+    tiles[wi%tiles.length].classList.add('on');wi++;
+  }
+  function startWall(){
+    if(reduced||cyc)return;
+    stepWall();
+    cyc=setInterval(stepWall,3000);
+  }
+  row.addEventListener('mouseenter',function(){
+    if(cyc){clearInterval(cyc);cyc=null;}
+    tiles.forEach(function(t){t.classList.remove('on')});
+  });
+  row.addEventListener('mouseleave',startWall);
+  startWall();
 })();
 
 /* "We interrupt this feed" popup.
